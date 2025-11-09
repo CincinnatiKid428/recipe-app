@@ -1,0 +1,3 @@
+#Django ignores
+*.bak
+*.sqlite3
