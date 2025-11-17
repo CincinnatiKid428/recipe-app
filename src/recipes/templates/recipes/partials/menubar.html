@@ -1,0 +1,9 @@
+<!-- recipes/partials/menubar.html -->
+{% load static %}
+<div class="menubar-container">
+  <div class="menubar-item">
+    <a href="{% url 'recipes:home' %}">
+      <img src="{% static 'recipes/images/simmer-menubar-logo.png' %}" class="menubar-logo" alt="Simmer logo" />
+    </a>
+  </div>
+</div>

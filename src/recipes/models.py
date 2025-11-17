@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.shortcuts import reverse
 
 difficulty_choices = (
   #(actual_db_value,human_readable_label)
@@ -20,8 +21,10 @@ def getDeletedUser():
 # Create your models here.
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
+    pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
     cooking_time = models.PositiveIntegerField()
     ingredients = models.CharField(max_length=255)
+    instructions = models.TextField(default='- None entered')
     difficulty = models.CharField(max_length=12, choices=difficulty_choices, default='intermediate')
     last_update = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -33,3 +36,10 @@ class Recipe(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    def get_absolute_url(self):
+        return reverse('recipes:detail', kwargs={'pk': self.pk})
+
+    def get_ingredients_as_list(self):
+        ingredient_list = self.ingredients.split(',')
+        return ingredient_list

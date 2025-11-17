@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+{% load static %}
+{% load markdownify %}
+<html>
+
+<head>
+  <title>
+    Simmer - {{recipe.name|title}} Detail
+  </title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <div class="page-container-header">
+      {{recipe.name|title}}
+    </div>
+
+    <div class="recipe-detail-row">
+
+      <div class="recipe-detail-pic-cell">
+        <img src="{{ recipe.pic.url }}" class="recipe-detail-pic" />
+      </div>
+
+      <div class="recipe-detail-text-cell">
+
+        <div class="recipe-detail-row">
+          <div class="recipe-detail-label">
+            Cook Time:
+          </div>
+          <div class="recipe-detail-value">
+            {{recipe.cooking_time}} min
+          </div>
+        </div>
+
+        <div class="recipe-detail-row">
+          <div class="recipe-detail-label">
+            Difficulty:
+          </div>
+          <div class="recipe-detail-value">
+            {{recipe.difficulty|title}}
+          </div>
+        </div>
+
+        <div class="recipe-detail-row">
+          <div class="recipe-detail-label">
+            Created By:
+          </div>
+          <div class="recipe-detail-value">
+            {{recipe.created_by|title}}
+          </div>
+        </div>
+
+        <div class="recipe-detail-row">
+          <div class="recipe-detail-label">
+            Last Update:
+          </div>
+          <div class="recipe-detail-value">
+            {{recipe.last_update|date:"m/d/Y"}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="recipe-detail-row">
+      <div class="recipe-detail-ingredients-label">
+        Ingredients:
+      </div>
+      <div class="recipe-detail-value">
+        <ul>
+          {% for item in recipe.get_ingredients_as_list %}
+          <li>{{item|title}}</li>
+          {%endfor%}
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-detail-row">
+      <div class="recipe-detail-ingredients-label">
+        Instructions:
+      </div>
+      <div class="recipe-detail-value">
+        {{recipe.instructions|markdownify}}
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+</html>

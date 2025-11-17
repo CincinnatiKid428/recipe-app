@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simmer - Home</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <div class="page-container-row">
+      <img src="{% static 'recipes/images/ingredients.jpg' %}" class="home-image" alt="ingredients on table" />
+    </div>
+    <div class="page-container-row">
+      <div class="home-container-item-col">
+        <h1>Welcome to Simmer!</h1>
+        <div class="page-container-row">
+          <a href="{% url 'recipes:list' %}" class="custom-button">View Recipes</a>
+          <a href="#" class="custom-button" onclick="alert('Not implemented yet!')">Login/Signup</a>
+        </div>
+      </div>
+
+      <img src="{% static 'recipes/images/simmer-logo1024x1024.png' %}" class="home-simmer-logo"
+        alt="Simmer pot logo" />
+    </div>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %} {%comment %} Needed for loading static css file {% endcomment %}
+<html>
+
+<head>
+  <title>
+    Simmer - Recipe List
+  </title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <div class="page-container-header">
+      Recipe List:
+    </div>
+
+    <div class="recipe-list-row">
+      {% for recipe in recipe_list %} {% comment %} Accesses each recipe record in model {% endcomment %}
+      <div class="recipe-list-item">
+        <div class="recipe-list-pic-cell">
+          <a href="{{recipe.get_absolute_url}}">
+            <img src="{{ recipe.pic.url }}" class="recipe-list-pic" />
+          </a>
+        </div>
+        <a href="{{recipe.get_absolute_url}}">
+          <span class="recipe-list-text">{{recipe.name|title}}</span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</body>
+
+</html>
