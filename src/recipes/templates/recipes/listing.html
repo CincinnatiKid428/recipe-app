@@ -25,7 +25,13 @@
       <div class="recipe-list-item">
         <div class="recipe-list-pic-cell">
           <a href="{{recipe.get_absolute_url}}">
-            <img src="{{ recipe.pic.url }}" class="recipe-list-pic" />
+
+            {% if recipe.pic %}
+            <img src="{{ recipe.pic.url }}" class="recipe-list-pic" alt="{{ recipe.name }}">
+            {% else %}
+            <img src="{% static 'recipes/images/no_picture.jpg' %}" class="recipe-list-pic" alt="No image">
+            {% endif %}
+
           </a>
         </div>
         <a href="{{recipe.get_absolute_url}}">

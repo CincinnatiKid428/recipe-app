@@ -100,3 +100,4 @@ ipython_config.py
 # poetry.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
+*.pyc

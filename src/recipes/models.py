@@ -21,7 +21,7 @@ def getDeletedUser():
 # Create your models here.
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
-    pic = models.ImageField(upload_to='recipes', default='no_picture.jpg')
+    pic = models.ImageField(upload_to='recipes', blank=True, null=True) #Default 'no_picture.jpg' image handled in templates
     cooking_time = models.PositiveIntegerField()
     ingredients = models.CharField(max_length=255)
     instructions = models.TextField(default='- None entered')

@@ -112,6 +112,12 @@ a:hover {
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3); /* decreases shadow on "press down" */
 }
 
+@media(max-width:550) {
+  .custom-button {
+    font-size: 12px;
+  }
+}
+
 /* ===== Styles for template - recipes/templates/recipes/home.html ===== */
 
 .home-container {
@@ -137,6 +143,21 @@ a:hover {
   flex-direction: column;
 }
 
+.home-welcome-text {
+  display:block;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.home-buttons-row{
+  border: var(--debug-border-width) solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
 .home-image {
   width: 100%;
   max-width: 500px;
@@ -149,6 +170,21 @@ a:hover {
   float:inline-start;
   height:200px;
   width:200px;
+}
+
+@media(max-width:550px) {
+  .home-buttons-row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .home-simmer-logo {
+    height:125px;
+    width:125px;
+  }
+  .home-welcome-text {
+    font-size: 18px;
+  }
 }
 
 /* ===== Styles for template - recipes/templates/recipes/listing.html ===== */

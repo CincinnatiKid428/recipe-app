@@ -24,7 +24,13 @@
     <div class="recipe-detail-row">
 
       <div class="recipe-detail-pic-cell">
-        <img src="{{ recipe.pic.url }}" class="recipe-detail-pic" />
+
+        {% if recipe.pic %}
+        <img src="{{ recipe.pic.url }}" class="recipe-detail-pic" alt="{{ recipe.name }}">
+        {% else %}
+        <img src="{% static 'recipes/images/no_picture.jpg' %}" class="recipe-detail-pic" alt="No image">
+        {% endif %}
+
       </div>
 
       <div class="recipe-detail-text-cell">

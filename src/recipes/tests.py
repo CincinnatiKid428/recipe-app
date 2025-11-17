@@ -24,33 +24,41 @@ class RecipeTestClass(TestCase):
         #Create recipes under the users
         cls.recipe1a = Recipe.objects.create(
             name='spaghetti',
+            pic='recipes/spaghetti.jpg',
             cooking_time=12,
             ingredients='pasta,tomato sauce,water,salt',
             difficulty='hard',
+            instructions='spaghetti instructions',
             created_by=cls.user1
         )
 
         cls.recipe1b = Recipe.objects.create(
             name='tea',
+            pic='recipes/tea.jpg',
             cooking_time=5,
             ingredients='tea leaves,water,sugar',
             difficulty='easy',
+            instructions='tea instructions',
             created_by=cls.user1
         )
 
         cls.recipe2a = Recipe.objects.create(
             name='tacos',
+            pic='recipes/tacos.jpg',
             cooking_time=15,
             ingredients='taco shells,ground beef,lettuce,onion,cheese',
             difficulty='hard',
+            instructions='tacos instructions',
             created_by=cls.user2
         )
 
         cls.recipe2b = Recipe.objects.create(
             name='porkchops',
+            pic='recipes/porkchops.jpg',
             cooking_time=10,
             ingredients='porkchops,olive oil,salt,pepper',
             difficulty='hard',
+            instructions='porkchops instructions',
             created_by=cls.user2
         )
 
@@ -88,6 +96,20 @@ class RecipeTestClass(TestCase):
         #Assertion compare max_length of field, expect 50
         self.assertEqual(field_length,50)
     
+    def test_recipe_pic(self):
+        test_recipe1 = Recipe.objects.get(id=1)
+        #Get the metadata for 'pic' field
+        field_label = test_recipe1._meta.get_field('pic').verbose_name
+        #Assertion
+        self.assertEqual(field_label,'pic')
+
+    def test_recipe_pic_field_type(self):
+        test_recipe1 = Recipe.objects.get(id=1)
+        #Get metadata for 'pic' field 
+        field = test_recipe1._meta.get_field('pic')
+        #Assertion
+        self.assertIsInstance(field, models.ImageField)
+
     def test_recipe_cooking_time(self):
         test_recipe1 = Recipe.objects.get(id=1)
         #Get the metadata for 'cooking_time' field
@@ -130,6 +152,20 @@ class RecipeTestClass(TestCase):
         #Assertion
         self.assertEqual(field_length,12)
 
+    def test_recipe_instructions(self):
+        test_recipe1 = Recipe.objects.get(id=1)
+        #Get the metadata for 'instructions' field
+        field_label = test_recipe1._meta.get_field('instructions').verbose_name
+        #Assertion
+        self.assertEqual(field_label,'instructions')
+
+    def test_recipe_instructions_field_type(self):
+        test_recipe1 = Recipe.objects.get(id=1)
+        #Get metadata for 'instructions' field 
+        field = test_recipe1._meta.get_field('instructions')
+        #Assertion
+        self.assertIsInstance(field, models.TextField)
+
     def test_recipe_last_update(self):
         test_recipe1 = Recipe.objects.get(id=1)
         #Get the metadata for 'last_update' field
@@ -150,3 +186,14 @@ class RecipeTestClass(TestCase):
         field = test_recipe1._meta.get_field('created_by')
         #Assertion
         self.assertIsInstance(field, models.ForeignKey)
+
+    #===Recipe Functions Tests============================================
+
+    def test_get_absolute_url(self):
+        recipe = Recipe.objects.get(id=1)
+        self.assertEqual(recipe.get_absolute_url(), '/list/1')
+
+    def test_get_ingredients_as_list(self):
+        recipe = Recipe.objects.get(id=1)
+        compare_list = ['pasta','tomato sauce','water','salt']
+        self.assertEqual(recipe.get_ingredients_as_list(), compare_list)
