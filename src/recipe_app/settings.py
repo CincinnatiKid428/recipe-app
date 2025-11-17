@@ -137,6 +137,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'recipes/static'),  # your app-level static files
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://recipes-pweaver.azurewebsites.net",
+]
+
 ###------ End Micorsoft Azure Deployment ------###
 
 # Default primary key field type
