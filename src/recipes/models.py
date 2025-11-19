@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
+from .storage_backends import MediaStorage  # import MediaStorage
 
 difficulty_choices = (
   #(actual_db_value,human_readable_label)
@@ -21,7 +22,13 @@ def getDeletedUser():
 # Create your models here.
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
-    pic = models.ImageField(upload_to='recipes', blank=True, null=True) #Default 'no_picture.jpg' image handled in templates
+    pic = models.ImageField(
+        upload_to='recipes', 
+        storage=MediaStorage(),   # force Azure storage
+        blank=True, 
+        null=True
+        #default='no_picture.jpg' image handled in templates
+    ) 
     cooking_time = models.PositiveIntegerField()
     ingredients = models.CharField(max_length=255)
     instructions = models.TextField(default='- None entered')
@@ -43,3 +50,8 @@ class Recipe(models.Model):
     def get_ingredients_as_list(self):
         ingredient_list = self.ingredients.split(',')
         return ingredient_list
+
+    #Custom defined save to correct path to Azure blob 'media/recipes/<filename>'
+    def save(self, *args, **kwargs):
+        print("   💾Saving Image:", self.pic.name)
+        super().save(*args, **kwargs)

@@ -177,13 +177,14 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    padding-top: 8px;
   }
   .home-simmer-logo {
     height:125px;
     width:125px;
   }
   .home-welcome-text {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 
@@ -223,6 +224,7 @@ a:hover {
 
 .recipe-list-pic {
   width: 90%;
+  max-width: 300px;
   height: auto;
   border-radius: 15px;
   transition: transform 0.25s ease;

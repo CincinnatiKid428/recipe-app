@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os 
 
+from dotenv import load_dotenv
+load_dotenv()  # Loads .env locally; Azure ignores this
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,17 +25,36 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+yjpe*&w0)o@&p&ne$ov15_k!zenn%wg#qj3ak#s=&ohc8+pg1'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key")
+
+
+
+# Azure Storage for uploaded media
+
+AZURE_ACCOUNT_NAME = os.environ.get("AZURE_ACCOUNT_NAME")
+AZURE_ACCOUNT_KEY = os.environ.get("AZURE_ACCOUNT_KEY")
+AZURE_CONTAINER = os.environ.get("AZURE_CONTAINER", "media")
+AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
+#DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage" # old - saves files locally to 'recipes/'
+DEFAULT_FILE_STORAGE = "recipes.storage_backends.MediaStorage"
+
+AZURE_SSL = True
+
+STATIC_URL = 'static/'
+#MEDIA_URL = '/media/' #old MEDIA_URL
+MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/"
+#MEDIA_ROOT = BASE_DIR / 'media' #unused now with Azure Blob storage
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = [
     "recipes-pweaver.azurewebsites.net", #Updated 11/15/2025 for Azure deploy
     "localhost",
     "127.0.0.1",
 ]
-
 
 # Application definition
 
@@ -45,6 +68,7 @@ INSTALLED_APPS = [
     #recipe_app apps below
     'recipes',
     'markdownify',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -122,10 +146,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 ###------ For Microsoft Azure Deployment: ------###
 
