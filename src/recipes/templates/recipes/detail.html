@@ -21,7 +21,7 @@
       {{recipe.name|title}}
     </div>
 
-    <div class="recipe-detail-row">
+    <div class="recipe-detail-image-row">
 
       <div class="recipe-detail-pic-cell">
 
@@ -75,23 +75,28 @@
     </div>
 
     <div class="recipe-detail-row">
-      <div class="recipe-detail-ingredients-label">
-        Ingredients:
+      <div class="recipe-detail-ingredient-cell">
+        <div class="recipe-detail-ingredients-label">
+          Ingredients:
+        </div>
       </div>
-      <div class="recipe-detail-value">
+      <div class="recipe-detail-ingredients-value">
         <ul>
           {% for item in recipe.get_ingredients_as_list %}
           <li>{{item|title}}</li>
           {%endfor%}
         </ul>
       </div>
+
     </div>
 
     <div class="recipe-detail-row">
-      <div class="recipe-detail-ingredients-label">
-        Instructions:
+      <div class="recipe-detail-ingredient-cell">
+        <div class="recipe-detail-ingredients-label">
+          Instructions:
+        </div>
       </div>
-      <div class="recipe-detail-value">
+      <div class="recipe-detail-ingredients-value">
         {{recipe.instructions|markdownify}}
       </div>
     </div>

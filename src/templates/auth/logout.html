@@ -5,7 +5,7 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simmer - Home</title>
+  <title>Simmer - Logout</title>
   <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 </head>
 
@@ -16,21 +16,17 @@
     {% include 'recipes/partials/menubar.html' %}
 
     <div class="page-container-row">
-      <img src="{% static 'recipes/images/ingredients.jpg' %}" class="home-image" alt="ingredients on table" />
-    </div>
-    <div class="page-container-row">
-      <div class="home-container-item-col">
-        <span class="home-welcome-text">Welcome to Simmer!</span>
+      <div class="home-container-item-col" style="align-items: center;">
+        <h2>Thanks for using Simmer!</h2>
+        <h3>You have been logged out.</h3>
         <div class="home-buttons-row">
           <a href="{% url 'recipes:list' %}" class="custom-button">View Recipes</a>
           <a href="{% url 'login' %}" class="custom-button">Login/Signup</a>
         </div>
       </div>
 
-      <img src="{% static 'recipes/images/simmer-logo1024x1024.png' %}" class="home-simmer-logo"
-        alt="Simmer pot logo" />
     </div>
-
+    <img src="{% static 'recipes/images/simmer-logo1024x1024.png' %}" class="home-simmer-logo" alt="Simmer pot logo" />
   </div>
 </body>
 
