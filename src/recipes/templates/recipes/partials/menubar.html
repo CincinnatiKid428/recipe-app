@@ -9,10 +9,13 @@
 
   {% if user.is_authenticated %}
   <div class="menubar-item">
-    <a href="{% url 'logout' %}" class="menubar-link">Logout({{user.get_username}})</a>
+    <a href="{% url 'recipes:search' %}" class="menubar-link">Search</a>
   </div>
   <div class="menubar-item">
     <a href="#" class="menubar-link" onclick="alert('Not yet implemented for authenticated users...')">Add Recipe</a>
+  </div>
+  <div class="menubar-item">
+    <a href="{% url 'logout' %}" class="menubar-link">Logout</a>
   </div>
   {% else %}
   <div class="menubar-item">

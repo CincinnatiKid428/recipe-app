@@ -195,5 +195,5 @@ class RecipeTestClass(TestCase):
 
     def test_get_ingredients_as_list(self):
         recipe = Recipe.objects.get(id=1)
-        compare_list = ['pasta','tomato sauce','water','salt']
+        compare_list = sorted(['pasta','tomato sauce','water','salt'])
         self.assertEqual(recipe.get_ingredients_as_list(), compare_list)

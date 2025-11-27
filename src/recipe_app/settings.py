@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os 
-
+import urllib.parse #for ODBC to Azure MSSQL
 from dotenv import load_dotenv
 load_dotenv()  # Loads .env locally; Azure ignores this
 
@@ -112,7 +112,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

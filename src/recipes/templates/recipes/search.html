@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %} {%comment %} Needed for loading static css file {% endcomment %}
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Simmer - Search
+  </title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <div class="page-container-header">
+      Search Recipes by Ingredient:
+    </div>
+
+    <div>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="custom-button"
+          style="margin-left: auto;margin-right: auto;margin-top:8px;">Search</button>
+      </form>
+    </div>
+    <div>
+      {% if recipes_df_html %}
+      {{recipes_df_html|safe}}
+      <br>
+      {% if pie_graph %}
+      <img src="data:image/png;base64, {{pie_graph|safe}}">
+      {% endif %}
+      {% else %}
+      <h3>No results</h3>
+      {% endif %}
+    </div>
+    <div>
+      <hr>
+      {% if line_graph %}
+      <h3>Recipe Difficulty Totals</h3>
+      <img src="data:image/png;base64, {{line_graph|safe}}">
+      {% endif %}
+      <hr>
+      {% if bar_graph %}
+      <h3>Recipes By User</h3>
+      <img src="data:image/png;base64, {{bar_graph|safe}}">
+      {% endif %}
+    </div>
+
+  </div>
+</body>
+
+</html>

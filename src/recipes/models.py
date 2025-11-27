@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from .storage_backends import MediaStorage  # import MediaStorage
 
+DEBUG = False
+
 difficulty_choices = (
   #(actual_db_value,human_readable_label)
   ('easy','Easy'),
@@ -48,10 +50,10 @@ class Recipe(models.Model):
         return reverse('recipes:detail', kwargs={'pk': self.pk})
 
     def get_ingredients_as_list(self):
-        ingredient_list = self.ingredients.split(',')
+        ingredient_list = sorted(self.ingredients.split(','))
         return ingredient_list
 
-    #Custom defined save to correct path to Azure blob 'media/recipes/<filename>'
+    #Custom defined save() to correct path to Azure blob 'media/recipes/<filename>'
     def save(self, *args, **kwargs):
-        print("   💾Saving Image:", self.pic.name)
+        DEBUG and print(" 💾Saving Image:", self.pic.name)
         super().save(*args, **kwargs)

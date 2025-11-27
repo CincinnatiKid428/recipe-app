@@ -103,3 +103,10 @@ ipython_config.py
 *.pyc
 
 .env
+
+#SQL Dump files
+dump.sql
+azure_dump.sql
+sqlite_data.json
+
+venv312/

@@ -17,6 +17,27 @@ a:hover {
   text-decoration: underline;
 }
 
+/* ===== Styling for Tables ========================================================= */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+
+.table-striped tr:nth-child(even) {
+    background-color: #dbdbdb;
+}
+
+.table th {
+    background-color: #bcfdd5;
+}
+
 /* ===== Shared Container Styles ==================================================== */
 
 .page-container {
