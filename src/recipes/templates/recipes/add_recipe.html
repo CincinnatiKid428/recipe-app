@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simmer - Add Recipe</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <h1>Add a New Recipe</h1>
+
+    <div class="page-container-row">
+      <form method="POST" enctype="multipart/form-data" class="recipe-form">
+        {% csrf_token %}
+
+        <!-- NAME -->
+        <div class="recipe-form-row">
+          <label class="recipe-form-label">{{ form.name.label_tag }}</label>
+          {{ form.name }}
+        </div>
+
+        <!-- COOKING TIME -->
+        <div class="recipe-form-row">
+          <label class="recipe-form-label">{{ form.cooking_time.label_tag }}(min)</label>
+          {{ form.cooking_time }}
+        </div>
+
+        <!-- INGREDIENTS -->
+        <div>
+          <p>
+            Ingredients should be listed with a comma separating each ingredient.
+          </p>
+          <p>For example:</p>
+          <p>
+            apples, oranges, peaches, lemons, limes
+          </p>
+        </div>
+
+        <div class="recipe-form-row">
+          <label class="recipe-form-label">{{ form.ingredients.label_tag }}</label>
+          {{ form.ingredients }}
+        </div>
+
+        <!-- INSTRUCTIONS -->
+        <div>
+          <p>
+            When writing your instructions, for best results in displaying in use a numbered list.
+          </p>
+          <p>For example:</p>
+          <p>
+          <ol>
+            <li>First do this.</li>
+            <li>Next, do this.</li>
+            <li>Keep adding instructions like this.</li>
+          </ol>
+          </p>
+        </div>
+
+        <div class="recipe-form-row">
+          <label class="recipe-form-label">{{ form.instructions.label_tag }}</label>
+          {{ form.instructions }}
+        </div>
+
+        <!-- DIFFICULTY (Drop-down) -->
+        <div class="recipe-form-row">
+          <label class="recipe-form-label">{{ form.difficulty.label_tag }}</label>
+          {{ form.difficulty }}
+        </div>
+
+        <!-- IMAGE UPLOAD -->
+        <div class="recipe-form-row">
+          <label class="recipe-form-label">{{ form.pic.label_tag }}</label>
+          {{ form.pic }}
+        </div>
+
+        <div class="recipe-form-button-row">
+          <button type="submit" class="custom-button">Save Recipe</button>
+          <a href="{% url 'recipes:list' %}" class="custom-button custom-button-red">Cancel</a>
+        </div>
+      </form>
+
+
+      {% if error_message %}
+      <div class="form-error">
+        {{ error_message }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+
+</html>

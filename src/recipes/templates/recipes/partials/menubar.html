@@ -2,23 +2,33 @@
 {% load static %}
 <div class="menubar-container">
   <div class="menubar-item">
-    <a href="{% url 'recipes:home' %}">
-      <img src="{% static 'recipes/images/simmer-menubar-logo.png' %}" class="menubar-logo" alt="Simmer logo" />
-    </a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'recipes:list' %}">
+      {% else %}
+      <a href="{% url 'recipes:home' %}">
+        {% endif %}
+        <img src="{% static 'recipes/images/simmer-menubar-logo.png' %}" class="menubar-logo" alt="Simmer logo" />
+      </a>
   </div>
 
   {% if user.is_authenticated %}
+  {% if hide_search_menu %}
+  {% else %}
   <div class="menubar-item">
     <a href="{% url 'recipes:search' %}" class="menubar-link">Search</a>
   </div>
+  {% endif %}
+  {% if hide_add_recipe_menu %}
+  {% else %}
   <div class="menubar-item">
-    <a href="#" class="menubar-link" onclick="alert('Not yet implemented for authenticated users...')">Add Recipe</a>
+    <a href="{% url 'recipes:add_recipe' %}" class="menubar-link">Add Recipe</a>
   </div>
-  <div class="menubar-item">
+  {% endif %}
+  <div class="menubar-item menubar-item-right">
     <a href="{% url 'logout' %}" class="menubar-link">Logout</a>
   </div>
   {% else %}
-  <div class="menubar-item">
+  <div class="menubar-item menubar-item-right">
     <a href="{% url 'login' %}" class="menubar-link">Login</a>
   </div>
   {% endif %}

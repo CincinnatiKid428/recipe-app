@@ -113,6 +113,12 @@ DATABASES = {
     }
 }
 
+# Neon.tech: Update database configuration from $DATABASE_URL.
+import dj_database_url
+# only override if DATABASE_URL exists
+if os.environ.get("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.config(conn_max_age=500)
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -154,7 +160,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Optional: additional folders to find static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'recipes/static'),  # your app-level static files
+    os.path.join(BASE_DIR, 'recipes/static'),  #app-level static files
 ]
 
 CSRF_TRUSTED_ORIGINS = [

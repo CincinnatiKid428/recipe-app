@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from .storage_backends import MediaStorage  # import MediaStorage
 
-DEBUG = False
+DEBUG_LOG = False
 
 difficulty_choices = (
   #(actual_db_value,human_readable_label)
@@ -33,7 +33,7 @@ class Recipe(models.Model):
     ) 
     cooking_time = models.PositiveIntegerField()
     ingredients = models.CharField(max_length=255)
-    instructions = models.TextField(default='- None entered')
+    instructions = models.TextField(default='1. ')
     difficulty = models.CharField(max_length=12, choices=difficulty_choices, default='intermediate')
     last_update = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -55,5 +55,12 @@ class Recipe(models.Model):
 
     #Custom defined save() to correct path to Azure blob 'media/recipes/<filename>'
     def save(self, *args, **kwargs):
-        DEBUG and print(" 💾Saving Image:", self.pic.name)
+    
+        #Normalize ingredients field
+        if self.ingredients:
+            cleaned = [i.strip().title() for i in self.ingredients.split(',') if i.strip()]
+            self.ingredients = ",".join(cleaned)
+
+        DEBUG_LOG and print("💾 Saving Recipe:", self.name)
+
         super().save(*args, **kwargs)

@@ -8,6 +8,10 @@
     --debug-border-width: 0px; /*Use value >0 for debug borders*/
 }
 
+body {
+  font-size: 14px;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -64,7 +68,7 @@ a:hover {
 }
 
 .page-container-row {
-  border: var(--debug-border-width) solid blue;
+  border: var(--debug-border-width) dashed blue;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,7 +103,13 @@ a:hover {
   border: var(--debug-border-width) solid green;
   display: flex;
   align-items: center;
-  margin-right:8px;
+  margin-right:10px;
+}
+
+/* Align the "Logout" item to the right */
+.menubar-item-right {
+  margin-left: auto; /* This will push the logout item to the right */
+  padding-right: 8px;
 }
 
 @media(max-width:550) {
@@ -120,19 +130,18 @@ a:hover {
   width: auto;
   border-radius: 20px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* horizontal, vertical, blur, color */
-  background-color: rgb(141, 231, 176);
+  background-color: #8de7b0;
   color: rgb(0, 0, 0);
   font-size: 14px;
   padding-left: 10px;
   padding-right: 10px;
-  /*transition: ease .2s;*/
 }
 
 .custom-button:hover {
   border: 2px solid rgb(27, 166, 82);
   color: rgb(0, 0, 0);
-  /*background-color: rgb(80, 204, 128);*/
   text-decoration: none;
+  cursor: pointer;
 }
 
 .custom-button:active {
@@ -140,14 +149,34 @@ a:hover {
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3); /* decreases shadow on "press down" */
 }
 
+.custom-button-red {
+  border: 2px solid #e78d8d;
+  background-color: #e78d8d;
+}
+
+.custom-button-red:hover {
+  border: 2px solid rgb(199, 24, 24);
+}
+
 @media(max-width:550) {
   .custom-button {
     font-size: 12px;
   }
 }
-/* ===== Styles for template - recipe_app/templates/auth/login.html ===== */
+
+/* ===== Shared Graph Styles ==================================================== */
+
+.responsive-graph {
+    max-width: 100%;  /* Prevents overflowing container */
+    height: auto;     /* Keeps aspect ratio */
+    display: block;   /* Removes inline spacing issues */
+    margin: 10px auto; /* Optional: center images with some margin */
+}
+
+/* ===== Styles for templates - recipe_app/templates/auth/login.html ===== */
+/* =====                      - recipe_app/templates/auth/register.html == */
 .login-form-row {
-  border: var(--debug-border-width) solid goldenrod;
+  border: var(--debug-border-width) solid cyan;
   display: flex;
   justify-content: right;
   padding-bottom: 10px;
@@ -166,10 +195,78 @@ a:hover {
 }
 
 .login-form-button-row {
-  border: var(--debug-border-width) solid yellow;
+  border: var(--debug-border-width) solid limegreen;
   display:flex;
   justify-content: center;
-  padding-top:10px;
+  padding-top:5px;
+  padding-bottom: 5px;
+}
+
+.login-form-error-message-row {
+  border: var(--debug-border-width) solid red;
+  color:red;
+  background-color: rgb(252, 220, 220);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+/* ===== Styles for templates - recipes/templates/add_recipe.html ===== */
+.recipe-form {
+  border: var(--debug-border-width) solid orangered;
+  width:100%
+}
+
+.recipe-form-row {
+  border: var(--debug-border-width) solid cyan;
+  display: flex;
+  justify-content: left;
+  padding-bottom: 10px;
+  width:100%;
+}
+
+.recipe-form-label {
+  border: var(--debug-border-width) dotted magenta;
+  width: 25%;
+  text-align: right;
+  font-size: 14px;
+}
+
+.recipe-form.input {
+  width: 70%;
+}
+
+.recipe-form-input {
+  border: 1px solid rgb(27, 166, 82);
+  width: 60%;
+  max-width: 500px;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.recipe-form-textarea {
+  border: 1px solid rgb(27, 48, 166);
+  display:block;
+  border-radius: 5px;
+  margin-left: 5px;
+  width:70%;
+  resize: none;
+}
+
+.recipe-form-button-row {
+  border: var(--debug-border-width) solid limegreen;
+  display:flex;
+  justify-content: center;
+  padding-top:5px;
+  padding-bottom: 5px;
+  gap: 5px;
+}
+
+.recipe-form-error-message-row {
+  border: var(--debug-border-width) solid red;
+  color:red;
+  background-color: rgb(252, 220, 220);
+  border-radius: 5px;
+  padding: 5px;
 }
 
 /* ===== Styles for template - recipes/templates/recipes/home.html ===== */
@@ -238,28 +335,28 @@ a:hover {
     width:125px;
   }
   .home-welcome-text {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
 /* ===== Styles for template - recipes/templates/recipes/listing.html ===== */
 
 .recipe-list-row {
-  border: var(--debug-border-width) solid blue;
+  border: var(--debug-border-width) solid lime;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  /*align-items: center; /*vert center items in row*/
   width: 100%;
   gap: 5px;
 }
 
 .recipe-list-item {
-  border: var(--debug-border-width) solid orange;
+  border: var(--debug-border-width) dashed magenta;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /*justify-content: center; /*vert center content in cell*/
+  align-items: center; /*horiz center content in cell*/
   padding: 10px;
   width: 45%;
 }
@@ -270,10 +367,23 @@ a:hover {
   }
 }
 
+@media (min-width: 550px) {
+  .recipe-list-item {
+    width: 45%;
+  }
+}
+
+@media (min-width: 800px) {
+  .recipe-list-item {
+    width: 30%;
+  }
+}
+
 .recipe-list-pic-cell {
-  border: var(--debug-border-width) dashed red;
+  border: var(--debug-border-width) solid cyan;
   display: flex;
   justify-content: center;
+  text-align: center; /*hoirz center pic in cell*/
 }
 
 .recipe-list-pic {
@@ -299,7 +409,7 @@ a:hover {
   border: var(--debug-border-width) solid blue;
   display:flex;
   width:100%;
-  justify-content: center; /*horiz center*/
+  justify-content: left; /*horiz center*/
   font-size: 14px;
   margin-top: 5px;
 }
@@ -332,7 +442,7 @@ a:hover {
 .recipe-detail-value {
   border: var(--debug-border-width) dashed mediumorchid;
   text-align: left;
-  width: 65%;
+  width: 55%;
   padding-left: 10px;
 }
 
@@ -379,6 +489,7 @@ a:hover {
 
 @media (max-width: 550px) {
   .recipe-detail-row {
+    justify-content: left;
     flex-wrap: wrap;
   }
   .recipe-detail-image-row {
@@ -395,6 +506,6 @@ a:hover {
     width: 30%;
   }
   .recipe-detail-value {
-    width: 65%;
+    width: 60%;
   }
 }

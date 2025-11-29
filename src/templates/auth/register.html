@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simmer - Sign Up</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <h1>Sign Up</h1>
+
+    <div class="page-container-row">
+      <div>
+        {% comment %} print form {% endcomment %}
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="login-form-row">
+            {{ form.username.label_tag }}
+            {{ form.username.as_widget }}
+          </div>
+
+          <div class="login-form-row">
+            {{ form.password1.label_tag }}
+            <input type="password" class="login-form-input" name="{{ form.password1.name }}" />
+          </div>
+
+          <div class="login-form-row">
+            Confirm:
+            <input type="password" class="login-form-input" name="{{ form.password2.name }}" />
+          </div>
+
+
+          <div class="login-form-button-row">
+            <button class="custom-button">Register</button>
+          </div>
+        </form>
+
+
+      </div>
+
+      <div class="page-container-item">
+        <img src="{% static 'recipes/images/simmer-logo1024x1024.png' %}" class="home-simmer-logo"
+          alt="Simmer pot logo" />
+
+      </div>
+
+
+    </div>
+    {% comment %} check for error message {% endcomment %}
+
+    {% if field_errors.username %}
+    <div class="login-form-error-message-row">
+      ❌{{ field_errors.username.0 }}
+    </div>
+    {% endif %}
+
+    {% if field_errors.password1 %}
+    <div class="login-form-error-message-row">
+      ❌{{ field_errors.password1.0 }}
+    </div>
+    {% endif %}
+
+    {% if field_errors.password2 %}
+    <div class="login-form-error-message-row">
+      ❌{{ field_errors.password2.0 }}
+    </div>
+    {% endif %}
+
+    {% if non_field_errors %}
+    <div class="login-form-error-message-row">
+      ❌{{ non_field_errors.0 }}
+    </div>
+    {% endif %}
+
+    <div class="page-container-row">
+      <h3>Already have an account? </h3>
+      <a href="{% url 'login' %}" class="custom-button">Log In</a>
+    </div>
+
+  </div>
+</body>
+
+</html>

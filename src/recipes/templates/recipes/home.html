@@ -23,7 +23,10 @@
         <span class="home-welcome-text">Welcome to Simmer!</span>
         <div class="home-buttons-row">
           <a href="{% url 'recipes:list' %}" class="custom-button">View Recipes</a>
-          <a href="{% url 'login' %}" class="custom-button">Log In</a>
+          {% if user.is_authenticated %}
+          {% else %}
+          <a href="{% url 'login' %}" class="custom-button">Login/Sign Up</a>
+          {% endif %}
         </div>
       </div>
 

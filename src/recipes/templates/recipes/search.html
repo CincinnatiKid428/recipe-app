@@ -33,7 +33,7 @@
       {{recipes_df_html|safe}}
       <br>
       {% if pie_graph %}
-      <img src="data:image/png;base64, {{pie_graph|safe}}">
+      <img src="data:image/png;base64, {{pie_graph|safe}}" class="responsive-graph">
       {% endif %}
       {% else %}
       <h3>No results</h3>
@@ -43,12 +43,12 @@
       <hr>
       {% if line_graph %}
       <h3>Recipe Difficulty Totals</h3>
-      <img src="data:image/png;base64, {{line_graph|safe}}">
+      <img src="data:image/png;base64, {{line_graph|safe}}" class="responsive-graph">
       {% endif %}
       <hr>
       {% if bar_graph %}
       <h3>Recipes By User</h3>
-      <img src="data:image/png;base64, {{bar_graph|safe}}">
+      <img src="data:image/png;base64, {{bar_graph|safe}}" class="responsive-graph">
       {% endif %}
     </div>
 
