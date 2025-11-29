@@ -41,9 +41,9 @@ DEFAULT_FILE_STORAGE = "recipes.storage_backends.MediaStorage"
 AZURE_SSL = True
 
 STATIC_URL = 'static/'
-#MEDIA_URL = '/media/' #old MEDIA_URL
-MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/"
-#MEDIA_ROOT = BASE_DIR / 'media' #unused now with Azure Blob storage
+#MEDIA_URL = '/media/' # (Development Env) old MEDIA_URL 
+MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/" # (Production Env)
+#MEDIA_ROOT = BASE_DIR / 'media' # (Development Env) unused now with Azure Blob storage
 
 #Authentication - View Protection
 LOGIN_URL = '/login/'
