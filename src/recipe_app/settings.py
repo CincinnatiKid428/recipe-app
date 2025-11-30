@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os 
+import os
+import sys
 import urllib.parse #for ODBC to Azure MSSQL
 from dotenv import load_dotenv
 load_dotenv()  # Loads .env locally; Azure ignores this
@@ -35,6 +36,7 @@ AZURE_ACCOUNT_NAME = os.environ.get("AZURE_ACCOUNT_NAME")
 AZURE_ACCOUNT_KEY = os.environ.get("AZURE_ACCOUNT_KEY")
 AZURE_CONTAINER = os.environ.get("AZURE_CONTAINER", "media")
 AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
+
 #DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage" # old - saves files locally to 'recipes/'
 DEFAULT_FILE_STORAGE = "recipes.storage_backends.MediaStorage"
 
@@ -44,6 +46,14 @@ STATIC_URL = 'static/'
 #MEDIA_URL = '/media/' # (Development Env) old MEDIA_URL 
 MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/" # (Production Env)
 #MEDIA_ROOT = BASE_DIR / 'media' # (Development Env) unused now with Azure Blob storage
+
+# TEST OVERRIDE ---------------------------------------
+# Settings used during testing to avoid tests trying to write to Azure blob
+if 'test' in sys.argv:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.InMemoryStorage'
+    MEDIA_ROOT = BASE_DIR / 'test_media/'
+    MEDIA_URL = '/test_media/'
+# -----------------------------------------------------
 
 #Authentication - View Protection
 LOGIN_URL = '/login/'
@@ -118,6 +128,17 @@ import dj_database_url
 # only override if DATABASE_URL exists
 if os.environ.get("DATABASE_URL"):
     DATABASES["default"] = dj_database_url.config(conn_max_age=500)
+
+# Force SQLite for tests, even if DATABASE_URL is set (Neon)
+# TEST OVERRIDE — MUST come after all DB config
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',  # fastest option
+    }
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

@@ -28,6 +28,9 @@
     <a href="{% url 'logout' %}" class="menubar-link">Logout</a>
   </div>
   {% else %}
+  <div class="menubar-item">
+    <a href="{% url 'recipes:about' %}" class="menubar-link">About</a>
+  </div>
   <div class="menubar-item menubar-item-right">
     <a href="{% url 'login' %}" class="menubar-link">Login</a>
   </div>

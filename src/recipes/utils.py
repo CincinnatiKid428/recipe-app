@@ -95,6 +95,7 @@ def get_chart(chart_type, data, **kwargs):
    if chart_type == 'bar':
        #📊Plot bar chart between user/creator on x-axis and recipe count on y-axis
        plt.bar(data['created_by__username'], data['count'])
+       plt.xticks(rotation=45, ha='right')
 
    elif chart_type == 'pie':
        #🥧Generate pie chart base on recipes that do/don't include search ingredient

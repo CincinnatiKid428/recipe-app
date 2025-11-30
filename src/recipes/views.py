@@ -19,6 +19,10 @@ DEBUG_LOG = False
 def homepage(request):
     return render(request, 'recipes/home.html')
 
+#View function for the about page
+def aboutpage(request):
+    return render(request, 'recipes/about.html')
+
 #Class for recipes list
 class RecipeListView(ListView):
     model = Recipe

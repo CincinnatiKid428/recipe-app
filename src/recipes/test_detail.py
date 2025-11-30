@@ -11,6 +11,7 @@ from .forms import IngredientSearchForm
 # Create your tests here.
 
 class RecipeFormTest(TestCase):
+    print(' ✔️ RecipeFormTest')
 
     @classmethod
     def setUpTestData(cls):

@@ -68,13 +68,18 @@ def login_view(request):
         non_field_errors = form.non_field_errors()
         if non_field_errors:
             error_message = non_field_errors[0]
-            print(' ⚠️ Authentication Error:',error_message)
+        
+        else: #else missing credentials
+            error_message = "Please enter both username and password."
 
     #Prep data to send from view to template
     context = {
       'form':form,
       'error_message':error_message
     }
+
+    #Debug printing error if one was found
+    DEBUG_LOG and print(' ⚠️ Authentication Error:',error_message)
 
     #Load login page with this context
     return render(request, 'auth/login.html', context)
