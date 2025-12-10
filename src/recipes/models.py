@@ -2,8 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from .storage_backends import MediaStorage  # import MediaStorage
+import re
 
-DEBUG_LOG = False
+
+DEBUG_LOG = True
 
 difficulty_choices = (
   #(actual_db_value,human_readable_label)
@@ -20,6 +22,14 @@ def getDeletedUser():
         username='Deleted User', 
         defaults={'password': '','is_active':False}) #setting inactive prevents 'Deleted User' from login
     return user
+
+#Formats recipe titles that may contain ['s] (i.e. Zoey's Casserole)
+def smart_title(text):
+    # Title-case words
+    text = re.sub(r"\b(\w)", lambda m: m.group(1).upper(), text.lower())
+    # Correct apostrophe-s (don’t capitalize the s)
+    text = re.sub(r"'s\b", "'s", text, flags=re.IGNORECASE)
+    return text
 
 # Create your models here.
 class Recipe(models.Model):
@@ -55,6 +65,16 @@ class Recipe(models.Model):
 
     #Custom defined save() to correct path to Azure blob 'media/recipes/<filename>'
     def save(self, *args, **kwargs):
+
+        #Normalize name field
+        if self.name:
+            DEBUG_LOG and print(f'>>>>>> starting name is {self.name}')
+            #strip whitespace, title case, correct 'S (i.e. Grandma'S Apple Cake) ⚠️ This does not correct 'S issue
+            #cleaned = self.name.strip().title().replace("'S","'s") 
+ 
+            cleaned = smart_title(self.name.strip())
+            DEBUG_LOG and print(f'>>>>>> cleaned name is {cleaned}')
+            self.name = cleaned
     
         #Normalize ingredients field
         if self.ingredients:

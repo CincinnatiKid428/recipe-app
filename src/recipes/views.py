@@ -1,17 +1,21 @@
 
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView #To display list & detail views
-from django.contrib.auth.mixins import LoginRequiredMixin #To protect class-based views
-from django.contrib.auth.decorators import login_required #To protect function-based views
-from django.urls import reverse #For building links in DataFrame
 
-from .models import Recipe  #Access to Recipe model
+from django.views.generic import ListView, DetailView   #To display list & detail views
+from django.views.generic import UpdateView, DeleteView #To allow editing on a recipe
+
+from django.contrib.auth.mixins import LoginRequiredMixin   #To protect class-based views
+from django.contrib.auth.decorators import login_required   #To protect function-based views
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse, reverse_lazy               #For building links in DataFrame
+
+from .models import Recipe                              #Access to Recipe model
 from .forms import IngredientSearchForm, RecipeForm
 from .utils import recipe_queryset_to_html, get_chart
 import pandas as pd
 from django.db.models import Count
 
-DEBUG_LOG = False
+DEBUG_LOG = True
 
 # Create your views here.
 
@@ -153,3 +157,30 @@ def add_recipe_view(request):
         'hide_add_recipe_menu':True,
     }
     return render(request, 'recipes/add_recipe.html', context)
+
+#Class for editing and updating a recipe.
+#🔒 PROTECTED VIEW
+class EditRecipeView(LoginRequiredMixin, UpdateView):
+    model = Recipe
+    form_class = RecipeForm
+    template_name = 'recipes/edit_recipe.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        recipe = self.get_object() #Get the recipe
+        if recipe.created_by != request.user:
+            raise PermissionDenied("You can't change someone else's recipe.")
+        return super().dispatch(request, *args, **kwargs)
+
+#Class view for deleting a recipe.
+#🔒 PROTECTED VIEW
+class DeleteRecipeView(LoginRequiredMixin, DeleteView):
+    model = Recipe
+    template_name = 'recipes/confirm_delete.html'
+    success_url = reverse_lazy('recipes:list')
+
+    def dispatch(self, request, *args, **kwargs):
+        recipe = self.get_object()
+        #Ensure owner is the logged in user
+        if recipe.created_by != request.user:
+            raise PermissionDenied("You can't delete another user's recipe")
+        return super().dispatch(request, *args, **kwargs)

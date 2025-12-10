@@ -36,6 +36,9 @@
             <input type="password" class="login-form-input" name="{{ form.password.name }}" />
           </div>
 
+          {% comment %} Preserve the URL to send user back to {% endcomment %}
+          <input type="hidden" name="next" value="{{ next }}">
+
           {% comment %} add button {% endcomment %}
           <div class="login-form-button-row">
             <button type="submit" class="custom-button">Login</button>

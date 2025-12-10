@@ -269,7 +269,7 @@ a:hover {
 
 .recipe-form-help {
   display:block;
-  max-width: 70%;
+  max-width: 95%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 10px;
@@ -294,6 +294,18 @@ a:hover {
   background-color: rgb(252, 220, 220);
   border-radius: 5px;
   padding: 5px;
+}
+
+.recipe-form-picture-input{
+  border: var(--debug-border-width) dashed orangered;
+  display:flex;
+  flex-direction: column;
+  padding-left: 5px;
+}
+
+.recipe-form-image-preview {
+  width: 75px;
+  height: auto;
 }
 
 /* ===== Styles for template - recipes/templates/recipes/home.html ===== */
@@ -512,6 +524,14 @@ a:hover {
   text-align: left;
   width: 65%;
   padding-left: 10px;
+}
+
+.recipe-detail-back-button {
+  border: var(--debug-border-width) dotted red;
+  position: fixed;
+  x:15px;
+  y:15px;
+  font-weight: 400;
 }
 
 @media (max-width: 550px) {

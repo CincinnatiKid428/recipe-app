@@ -47,6 +47,9 @@ def login_view(request):
     error_message = None
     form = AuthenticationForm()
 
+    #Capture ?next=... from GET or POST
+    next_url = request.GET.get('next') or request.POST.get('next')
+
     if request.method == 'POST':
         #Read the form data via POST request
         form = AuthenticationForm(data=request.POST)
@@ -62,6 +65,9 @@ def login_view(request):
             if user is not None:
                 login(request, user) #Django function
                 DEBUG_LOG and print(f'✅ Login complete for [{user}]')
+
+                if next_url:
+                    return redirect(next_url)
                 return redirect('recipes:list')
 
         #If we reach here, form was invalid OR user was invalid

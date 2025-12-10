@@ -12,14 +12,34 @@
 </head>
 
 <body>
+
+  <a href="{% url 'recipes:list' %}" class="custom-button recipe-detail-back-button">&lt; Back</a>
+
+
   <div class="page-container">
 
     <!--Menubar-->
     {% include 'recipes/partials/menubar.html' %}
 
     <div class="page-container-header">
-      {{recipe.name|title}}
+      {{recipe.name}}
     </div>
+    {% if request.user == object.created_by %}
+    <div class="page-container-row">
+      <!--Edit button-->
+      <a href="{% url 'recipes:edit' object.pk %}" class="custom-button">Edit Recipe</a>
+
+      <!--Delete button (with confirm in form)-->
+      <form method="POST" action="{% url 'recipes:delete' object.pk %}"
+        onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+        {% csrf_token %}
+        <button type="submit" class="custom-button custom-button-red">
+          Delete Recipe
+        </button>
+      </form>
+
+    </div>
+    {% endif %}
 
     <div class="recipe-detail-image-row">
 
