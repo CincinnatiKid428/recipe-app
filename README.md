@@ -1,4 +1,4 @@
-# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.0.0
+# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.1.0
 
 ## Description:
 A Python/Django application that users will be able to log into and interact with a recipe database.
@@ -9,11 +9,10 @@ A Python/Django application that users will be able to log into and interact wit
 - View details about a recipe
 - Add a new recipe
 - Search for recipes by ingredient
+- **⭐ Edit/Delete recipes (new in v1.1.0)**
 <br><br>
 ### 🔮 Future Features
 - Sort recipe list filter
-- Update a recipe (if you own the recipe)
-- Delete a recipe (if you own the recipe)
 
 ## 🍴 Using the Application:
 
@@ -41,8 +40,8 @@ _⚠️Note: Sorting recipe list not implemented in this release._
 <br><br>
 
 ### Recipe Detail
-<img width="766" height="845" alt="image" src="https://github.com/user-attachments/assets/2d4b474e-7fb4-4e15-8c25-34b8a924bc3f" /><br>
-The recipe detail view shows all the stored information about the recipe including who created it, last update, cooking time, difficulty level, ingredient list and instructions to prepare the dish.  
+<img width="722" height="1095" alt="image" src="https://github.com/user-attachments/assets/69a163d1-5d3e-42c4-90c3-5804bb86fea1" /><br>
+The recipe detail view shows all the stored information about the recipe including who created it, last update, cooking time, difficulty level, ingredient list and instructions to prepare the dish.  If you are the owner of the recipe, you will be presented with the "Edit Recipe" and "Delete Recipe" buttons to update or remove your recipe.
 <br><br>
 
 ### Add Recipe
@@ -123,3 +122,12 @@ _⚠️Note: Updating/Deleting a recipe is not implemented in this release._
 - [Django](https://www.djangoproject.com/) v5.2.7 
 - [Microsoft Azure](https://portal.azure.com/) Applicatin Hosting, Blob Storage
 - [Neon](https://neon.tech/) Postgres Database Hosting
+
+<br><br>
+## 🚧 Change Log:
+
+- v1.1.0 (12/10/2025) :
+     1. Added edit/delete recipe functionality for owners to manage their recipes.
+     2. "Back" button on recipe detail page to return to recipe list.
+     3. Users will be directed to a recipe detail page if they tried to access it before logging in once they authenticate.
+- v1.0.0 (11/30/2025) : Initial release
