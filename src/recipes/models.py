@@ -42,7 +42,7 @@ class Recipe(models.Model):
         #default='no_picture.jpg' image handled in templates
     ) 
     cooking_time = models.PositiveIntegerField()
-    ingredients = models.CharField(max_length=255)
+    ingredients = models.TextField()
     instructions = models.TextField(default='1. ')
     difficulty = models.CharField(max_length=12, choices=difficulty_choices, default='intermediate')
     last_update = models.DateTimeField(auto_now=True)
