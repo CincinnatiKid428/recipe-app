@@ -1,4 +1,4 @@
-# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.1.0
+# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.1.1
 
 ## Description:
 A Python/Django application that users will be able to log into and interact with a recipe database.
@@ -126,8 +126,9 @@ _⚠️Note: Updating/Deleting a recipe is not implemented in this release._
 <br><br>
 ## 🚧 Change Log:
 
-- v1.1.0 (12/10/2025) :
+- v1.1.1 (12/13/2025): Changed database field `ingredients` from CharField to TextField to allow for increased capacity.
+- v1.1.0 (12/10/2025):
      1. Added edit/delete recipe functionality for owners to manage their recipes.
      2. "Back" button on recipe detail page to return to recipe list.
      3. Users will be directed to a recipe detail page if they tried to access it before logging in once they authenticate.
-- v1.0.0 (11/30/2025) : Initial release
+- v1.0.0 (11/30/2025): Initial release
