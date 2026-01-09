@@ -15,7 +15,7 @@ from .utils import recipe_queryset_to_html, get_chart
 import pandas as pd
 from django.db.models import Count
 
-DEBUG_LOG = True
+DEBUG_LOG = False
 
 # Create your views here.
 

@@ -12,6 +12,14 @@
   </div>
 
   {% if user.is_authenticated %}
+
+  {% if is_owner %}
+  {% else %}
+  <div class="menubar-item">
+    <a href="{% url 'profile' request.user.username %}" class="menubar-link">Profile</a>
+  </div>
+  {% endif %}
+
   {% if hide_search_menu %}
   {% else %}
   <div class="menubar-item">

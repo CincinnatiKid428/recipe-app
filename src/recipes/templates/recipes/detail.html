@@ -12,8 +12,8 @@
 </head>
 
 <body>
-
-  <a href="{% url 'recipes:list' %}" class="custom-button recipe-detail-back-button">&lt; Back</a>
+  <!--Back to recipe list button-->
+  <a href="{% url 'recipes:list' %}" class="custom-button recipe-detail-back-button">&lt; Recipe List</a>
 
 
   <div class="page-container">
@@ -78,7 +78,11 @@
             Created By:
           </div>
           <div class="recipe-detail-value">
-            {{recipe.created_by|title}}
+            {% if recipe.created_by|title != "Deleted User" %}
+            <a href="{% url 'profile' recipe.created_by%}"><strong>{{recipe.created_by|title}}</strong></a>
+            {% else %}
+            <strong>{{recipe.created_by|title}}</strong>
+            {% endif %}
           </div>
         </div>
 

@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simmer - Delete Account</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    <h1>Delete Account</h1>
+
+    <p>
+      This will permanently delete your account.
+      Your recipes will remain visible but will be attributed to
+      <strong>Deleted User</strong>. This action <strong>cannot</strong> be undone.
+    </p>
+
+    <div class="page-container-row">
+      <div>
+        {% comment %} print form {% endcomment %}
+        <form action="" method="POST">
+          {% comment %} add Django security token {% endcomment %}
+          {% csrf_token %}
+
+
+          <button type="submit" class="custom-button custom-button-red">
+            Permanently Delete My Account
+          </button>
+          <br>
+          <a href="{% url 'recipes:list' %}" class="custom-button">Cancel</a>
+
+
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

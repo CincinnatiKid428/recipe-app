@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simmer - Profile</title>
+  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!--Menubar-->
+    {% include 'recipes/partials/menubar.html' %}
+
+    {% if is_owner %}
+
+    <h1>{{profile_user.username}}'s Account
+      <a href="{% url 'delete_user' %}" class="custom-button custom-button-red">Delete Account</a>
+    </h1>
+
+    <div class="page-container-row">
+      <h2>My Recipes</h2>
+    </div>
+
+    {% else %}
+
+    <h1>{{profile_user.username}}'s Recipes</h1>
+
+    {% endif %}
+
+    {% if recipes %}
+
+    <div class="profile-recipe-list">
+      <div class="profile-recipe-list-header">
+        (Click on a recipe name to view the details)
+      </div>
+      {% for recipe in recipes %}
+      <div class="profile-recipe-list_item">
+        <a href="{{recipe.get_absolute_url}}" class="profile-recipe-link">
+          {{recipe.name}}
+        </a>
+        (Last update {{recipe.last_update|date:"M d Y"}})
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div>
+      <h3>No recipes added yet.</h3>
+    </div>
+    {% endif %}
+
+  </div>
+
+</body>
+
+</html>

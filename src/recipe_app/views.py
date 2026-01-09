@@ -1,5 +1,16 @@
 from django.shortcuts import render, redirect
 
+from django.views.generic import UpdateView, DeleteView #To allow editing on a User
+
+from django.contrib.auth.models import User
+from django.views.generic import DetailView #To display user's recipes in profile view
+from recipes.models import Recipe
+from django.http import Http404
+
+#Protected view imports:
+from django.contrib.auth.mixins import LoginRequiredMixin   #To protect class-based views
+from django.contrib.auth.decorators import login_required   #To protect function-based views
+
 #Authentication imports:
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -95,3 +106,54 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return render(request, 'auth/logout.html')
+
+
+#Function view for deleting a user.
+#🔒 PROTECTED VIEW
+@login_required
+def delete_user(request):
+    #If POST then delete the user
+    if request.method == "POST":
+        user = request.user
+        DEBUG_LOG and print(f' ⚠️ Deleting user [{user}]')
+        logout(request)                 # End session first
+        user.delete()                   # Triggers SET(getDeletedUser)
+        DEBUG_LOG and print(f' ✅ Deleted [{user}] successfully!')
+        return redirect("recipes:home") # Go to login after delete
+
+    #Show template for confirmation for non-POST request
+    return render(request, "auth/confirm_delete_user.html")
+
+
+#Class-based view for user's profile containg DetailView of their recipes.
+#🔒 PROTECTED VIEW
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = "auth/profile.html"
+    context_object_name = "profile_user"
+    slug_field = "username"
+    slug_url_kwarg = "username"
+
+    #Helps protect against inactive user / "Deleted User" profile
+    def get_object(self):
+        user = super().get_object()
+        if not user.is_active:
+            raise Http404("User not found")
+        return user
+
+    def get_context_data(self, **kwargs):
+        #Preserve Django context data
+        context = super().get_context_data(**kwargs)
+
+        #Add "recipes" list to context data 
+        context["recipes"] = Recipe.objects.filter(
+            created_by=self.object
+        ).order_by("-last_update")
+
+        #Check if authenticated user is owner of profile
+        context["is_owner"] = self.request.user == self.object
+        
+        #Add hide value for menubar
+        #context["hide_profile_menu"] = True
+
+        return context
