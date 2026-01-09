@@ -40,23 +40,24 @@ _⚠️Note: Sorting recipe list not implemented in this release._
 <br><br>
 
 ### Recipe Detail
-<img width="722" height="1095" alt="image" src="https://github.com/user-attachments/assets/69a163d1-5d3e-42c4-90c3-5804bb86fea1" /><br>
+<img width="722" height="1026" alt="image" src="https://github.com/user-attachments/assets/afa200eb-d709-40a1-81e5-5bc10992451b" /><br>
 The recipe detail view shows all the stored information about the recipe including who created it, last update, cooking time, difficulty level, ingredient list and instructions to prepare the dish.  If you are the owner of the recipe, you will be presented with the "Edit Recipe" and "Delete Recipe" buttons to update or remove your recipe.
 <br><br>
 
 ### Add Recipe
-<img width="681" height="884" alt="image" src="https://github.com/user-attachments/assets/7e7b1b96-2b6d-4ca6-8710-4fb052c94379" /><br>
+<img width="679" height="884" alt="image" src="https://github.com/user-attachments/assets/17ca334c-8e13-4eef-8b4e-1db0fc46b6cc" /><br>
 Authenticated users can add their own new recipes to the database by clicking "Add Recipe" in the menubar and completing the form above.  Instructions on formatting specifics given for best results in adding ingredients list and instructions.
 <br><br>
 
-### Search
-<img width="715" height="1619" alt="image" src="https://github.com/user-attachments/assets/bb2763da-832c-4bcc-aec4-756ebd3694fd" /><br>
-Clicking "Search" on the menubar brings the user to the search view where an ingredient (full or partial name) can be entered and the recipes containing that ingredient will be displayed.  The names of the recipes are links to the detailed recipe view for each. The page also displays some graphs with data showing how many recipes contain the ingredient, the overall distribution of difficulty level over all recipes and how many recipes users have contributed to the database.
+### Edit/Delete Recipes
+<img width="665" height="173" alt="image" src="https://github.com/user-attachments/assets/9bc0315f-a66a-4333-b2a4-48aedf3da523" /><br>
+When viewing recipe details that the authenticated user created, the options for "Edit Recipe" and "Delete Recipe" will be presented.  Only the owner of the recipe will be able to access these buttons and modify/delete their own recipes. Choosing to delete a recipe will prompt user for confirmation prior to deleting as this cannot be undone. When choosing to edit the recipe, the user will be presented with the following screen where they can make changes:<br><br>
+<img width="681" height="959" alt="image" src="https://github.com/user-attachments/assets/40ff735e-97f4-45dd-a6a5-035e33a7f03b" />
 <br><br>
 
-### Updating Recipes
-
-_⚠️Note: Updating/Deleting a recipe is not implemented in this release._
+### Search
+<img width="715" height="1619" alt="image" src="https://github.com/user-attachments/assets/a3b07af2-04f3-4f2a-8a87-4557af0122da" /><br>
+Clicking "Search" on the menubar brings the user to the search view where an ingredient (full or partial name) can be entered and the recipes containing that ingredient will be displayed.  The names of the recipes are links to the detailed recipe view for each. The page also displays some graphs with data showing how many recipes contain the ingredient, the overall distribution of difficulty level over all recipes and how many recipes users have contributed to the database.
 <br><br>
 
 ## 🛠 Setting Up Project Locally:
@@ -131,4 +132,4 @@ _⚠️Note: Updating/Deleting a recipe is not implemented in this release._
      1. Added edit/delete recipe functionality for owners to manage their recipes.
      2. "Back" button on recipe detail page to return to recipe list.
      3. Users will be directed to a recipe detail page if they tried to access it before logging in once they authenticate.
-- v1.0.0 (11/30/2025): Initial release
+- v1.0.0 (11/30/2025): Initial release.
