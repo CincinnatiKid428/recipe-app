@@ -5,10 +5,12 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
     /*Variables*/
+    --default-font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     --debug-border-width: 0px; /*Use value >0 for debug borders*/
 }
 
 body {
+  font-family: var(--default-font);
   font-size: 14px;
 }
 
@@ -19,27 +21,6 @@ a {
 
 a:hover {
   text-decoration: underline;
-}
-
-/* ===== Styling for recipes/search.html results Tables ========================================================= */
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th, .table td {
-  border: 1px solid #000;
-  padding: 8px;
-  text-align: center;
-}
-
-.table-striped tr:nth-child(even) {
-  background-color: #dbdbdb;
-}
-
-.table th {
-  background-color: #bcfdd5;
 }
 
 /* ===== Shared Container Styles ==================================================== */
@@ -89,8 +70,25 @@ a:hover {
   flex-shrink: 1;
   flex-grow: 1;
   top:0;
-  padding-left: 2%;
+  /*padding-left: 2%;*/
+  /*padding-top: 5px;*/
+}
+
+.menubar-container.navbar {
   padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Bootstrap hamburger toggle icon sized smaller */
+.menubar-container .navbar-toggler-icon {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.menubar-container .navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-right: 10px;
 }
 
 .menubar-logo {
@@ -100,17 +98,18 @@ a:hover {
 }
 
 .menubar-item {
-  border: var(--debug-border-width) solid green;
+  border: var(--debug-border-width) solid magenta;
   display: flex;
   align-items: center;
   margin-right:10px;
+  margin-left: auto; /* This will push the logout item to the right */
 }
 
-/* Align the "Logout" item to the right */
-.menubar-item-right {
-  margin-left: auto; /* This will push the logout item to the right */
+/* This will push the menubar item to the right */
+/*.menubar-item-right {
+  margin-left: auto; 
   padding-right: 10px;
-}
+}*/
 
 @media(max-width:550) {
   .menubar-item {
@@ -210,6 +209,27 @@ a:hover {
   background-color: rgb(252, 220, 220);
   border-radius: 5px;
   padding: 5px;
+}
+
+/* ===== Styling for recipes/search.html results Tables ========================================================= */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: center;
+}
+
+.table-striped tr:nth-child(even) {
+  background-color: #dbdbdb;
+}
+
+.table th {
+  background-color: #bcfdd5;
 }
 
 /* ===== Styles for template - recipes/templates/recipes/about.html ===== */
@@ -566,8 +586,9 @@ a:hover {
 .recipe-detail-back-button {
   /*border: var(--debug-border-width) dotted red;*/
   position: fixed;
-  x:15px;
-  y:15px;
+  top: 60px;     /* below navbar */
+  left: 15px;
+  z-index: 1100; /* above content */
   font-weight: 400;
 }
 

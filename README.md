@@ -1,4 +1,4 @@
-# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.2.0
+# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.3.0
 
 ## Table of Contents
 - [Description](#description)
@@ -169,11 +169,15 @@ Clicking "Search" on the bar brings the user to the search view where an ingredi
 ## 🤖 Technologies Used:
 - [Python](https://www.python.org/downloads/) v3.13.7
 - [Django](https://www.djangoproject.com/) v5.2.7 
+- [Bootstrap](https://getbootstrap.com/) v5.3.3
 - [Microsoft Azure](https://portal.azure.com/) Applicatin Hosting, Blob Storage
 - [Neon](https://neon.tech/) Postgres Database Hosting
 
 <br><br>
 ## 🚧 Change Log:
+- v1.3.0 (1/10/2026): 
+     1. Added hamburger menu with Bootstrap for mobile support and updated all template html files to use new navbar.
+     2. Added "All Recipes" option to menu (also accessed by clicking Simmer logo when logged in)
 - v1.2.0 (1/9/2026):
      1. Added Profile view feature where users can see a listing of recipes created by a selected user (or their own).
      2. Added ability for user to delete their own account via the Profile view screen.
