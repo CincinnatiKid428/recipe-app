@@ -44,7 +44,6 @@ a:hover {
   font-size: 26px;
   font-weight: 800;
   margin-top: 15px;
-  margin-left: 15px;
   align-items: center;
   justify-content: center;
 }
@@ -71,6 +70,17 @@ a:hover {
   gap: 5px;
 }
 
+@media (max-width:550px) {
+  .page-container-header {
+    font-size: 18px;
+    flex-direction: column; /*better alignment for fav button in column with small width*/
+    margin-top: 25px;
+  }
+  .page-header-fav-row {
+    display: block;
+  }
+}
+
 /* ===== Shared Menu Bar Styles ======================================================================== */
 
 .menubar-container {
@@ -79,7 +89,7 @@ a:hover {
   position: fixed;
   width: 100%;
   background-color: #8de7b0;
-  z-index: 1000;
+  z-index: 1101;
   column-gap: 10px;
   flex-shrink: 1;
   flex-grow: 1;
@@ -125,9 +135,9 @@ a:hover {
   padding-right: 10px;
 }*/
 
-@media(max-width:550) {
+@media(max-width:550px) {
   .menubar-item {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
@@ -200,7 +210,7 @@ a:hover {
   cursor: pointer;
 }
 
-@media(max-width:550) {
+@media(max-width:550px) {
   .custom-button {
     font-size: 12px;
   }

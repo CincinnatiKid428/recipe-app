@@ -63,8 +63,6 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = [
     "recipes-pweaver.azurewebsites.net", #Updated 11/15/2025 for Azure deploy
-    "localhost",
-    "127.0.0.1",
 ]
 
 # Application definition
