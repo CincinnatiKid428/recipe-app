@@ -1,11 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404, JsonResponse
 
-from django.views.generic import UpdateView, DeleteView #To allow editing on a User
-
-from django.contrib.auth.models import User
-from django.views.generic import DetailView #To display user's recipes in profile view
-from recipes.models import Recipe
-from django.http import Http404
+#Model/View imports
+from django.contrib.auth import get_user_model
+from recipes.models import Recipe, UserProfile
+from django.views.generic import UpdateView, DeleteView, DetailView
 
 #Protected view imports:
 from django.contrib.auth.mixins import LoginRequiredMixin   #To protect class-based views
@@ -15,6 +14,11 @@ from django.contrib.auth.decorators import login_required   #To protect function
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import CustomUserCreationForm
+
+#Used for subqueries to determine favorite status in UserProfileView
+from django.db.models import Count, Exists, OuterRef
+
+User = get_user_model()
 
 DEBUG_LOG = False
 
@@ -153,7 +157,78 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         #Check if authenticated user is owner of profile
         context["is_owner"] = self.request.user == self.object
         
-        #Add hide value for menubar
-        #context["hide_profile_menu"] = True
+        #Add UserProfile data to context for the selected user
+        context["user_profile"] = self.object.profile
+
+        DEBUG_LOG and print(f' 🟩 recipe_app/views.py|context[favorite_recipes] is {context["user_profile"]}')
+
+        #Favorite recipes/cooks for the selected user
+        context["favorite_recipes"] = self.object.profile.favorite_recipes.all()
+        context["favorite_cooks"] = self.object.profile.favorite_cooks.all()
+
+        DEBUG_LOG and print(f' 💚 recipe_app/views.py|context[favorite_recipes] is {context["favorite_recipes"]}')
+        DEBUG_LOG and print(f' 💚 recipe_app/views.py|context[favorite_cooks] is {context["favorite_cooks"]}')
+
+        cook = self.object #The user whose profile we are viewing
+
+        if not context["is_owner"]:
+            context["cook_favorited"] = (self.request.user.profile.favorite_cooks.filter(pk=cook.pk).exists())
+        else:
+            context["cook_favorited"] = False
 
         return context
+
+
+#Function-based view allowing toggling of favorite recipes/cooks per user profile
+#🔒 PROTECTED VIEW
+@login_required
+def toggle_favorite(request):
+
+    #Get the favorite type and id & user profile
+    fav_type = request.POST.get("type")
+    fav_id = request.POST.get("id")
+    profile = request.user.profile
+
+    #Values to be returned in a JSON object to update UI
+    favorited = None
+    count = None
+
+    if fav_type == "recipe":
+
+        recipe = get_object_or_404(Recipe, pk=fav_id)
+
+        #Toggle fav recipe on/off & get new count
+        if profile.favorite_recipes.filter(pk=recipe.pk).exists():
+            profile.favorite_recipes.remove(recipe)
+            favorited = False
+        else:
+            profile.favorite_recipes.add(recipe)
+            favorited = True
+
+        count = recipe.recipe_fans.count()
+
+    elif fav_type == "cook":
+
+        cook = get_object_or_404(User, username=fav_id)
+
+        #Cannot favorite yourself (toggle should be hidden in template too)
+        if cook == request.user:
+            return JsonResponse({"error": "Cannot favorite yourself"}, status=400)
+
+        #Toggle fav cook on/off & get new count
+        if profile.favorite_cooks.filter(pk=cook.pk).exists():
+            profile.favorite_cooks.remove(cook)
+            favorited = False
+        else:
+            profile.favorite_cooks.add(cook)
+            favorited = True
+
+        count = cook.cook_fans.count()
+
+    else:
+        return JsonResponse({"error": "Invalid type"}, status=400)
+
+    return JsonResponse({
+        "favorited": favorited,
+        "count": count
+    })

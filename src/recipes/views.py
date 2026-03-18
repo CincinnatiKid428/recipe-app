@@ -13,7 +13,7 @@ from .models import Recipe                              #Access to Recipe model
 from .forms import IngredientSearchForm, RecipeForm
 from .utils import recipe_queryset_to_html, get_chart
 import pandas as pd
-from django.db.models import Count
+from django.db.models import Count, Exists, OuterRef
 
 DEBUG_LOG = False
 
@@ -31,12 +31,61 @@ def aboutpage(request):
 class RecipeListView(ListView):
     model = Recipe
     template_name = 'recipes/listing.html'
+    context_object_name = "recipes"
+    ordering = ["-last_update"]
+
+    def get_queryset(self):
+
+        queryset = super().get_queryset()
+
+        if self.request.user.is_authenticated:
+
+            queryset = queryset.annotate(
+                is_favorited=Exists(
+                    self.request.user.profile.favorite_recipes.filter(
+                        pk=OuterRef("pk")
+                    )
+                )
+            )
+        return queryset
 
 #Class for recipe details
 #🔒 PROTECTED VIEW
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = 'recipes/detail.html'
+    context_object_name = "recipe"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        recipe = self.object
+
+        if self.request.user.is_authenticated:
+            context["recipe_favorited"] = (
+                self.request.user.profile.favorite_recipes
+                .filter(pk=recipe.pk)
+                .exists()
+            )
+        else:
+            context["recipe_favorited"] = False
+
+        cook = recipe.created_by
+
+        #Omit Deleted User profile and own profile
+        if cook == "Deleted User" or cook == self.request.user.username:
+            cook = None
+
+        if self.request.user.is_authenticated and cook:
+            context["cook_favorited"] = (
+                self.request.user.profile.favorite_cooks
+                .filter(pk=cook.pk)
+                .exists()
+            )
+        else:
+            context["cook_favorited"] = False
+
+        return context
 
 #FBV for searching recipes based on ingredient
 @login_required #🔒 PROTECTED VIEW

@@ -6,8 +6,12 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simmer - Profile</title>
+
   <!--Bootstrap CDN-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!--Bootstrap Icons CDN-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
   <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 </head>
 
@@ -19,51 +23,150 @@
 
     {% if is_owner %}
 
+    <!--Authenticated user's profile-->
     <div class="page-container-header">
       {{profile_user.username}}'s Account
+      <div class="page-header-fav-row">
+        ❤️
+        {{profile_user.cook_fans.count}}
+      </div>
     </div>
     <a href="{% url 'delete_user' %}" class="custom-button custom-button-red">Delete Account</a>
 
-    <div class="page-container-row">
-      <div class="page-container-header">
-        My Recipes
-      </div>
-    </div>
-
     {% else %}
 
+    <!--Another user's profile-->
     <div class="page-container-header">
-      {{profile_user.username}}'s Recipes
+      {{profile_user.username}}'s Profile
+      <div class="page-header-fav-row">
+        <i class="bi {% if cook_favorited %}bi-heart-fill text-danger{% else %}bi-heart{% endif %} favorite-btn custom-favbtn-detail-profile"
+          data-type="cook" data-id="{{ profile_user.username }}">
+        </i>
+        <span id="count-cook-{{ profile_user.username }}">
+          {{ profile_user.cook_fans.count }}
+        </span>
+      </div>
     </div>
 
     {% endif %}
 
-    {% if recipes %}
+    <div class="profile-list-container">
 
-    <div class="profile-recipe-list">
-      <div class="profile-recipe-list-header">
-        (Click on a recipe name to view the details)
+      <div class="profile-list-button-row">
+        <div class="profile-list-button profile-list-button-active" id="user_recipes_btn" onclick="showMyRecipes()">
+          My Recipes
+        </div>
+        <div class="profile-list-button profile-list-button-inactive" id="fav_recipes_btn" onclick="showFavRecipes()">
+          Favorite Recipes
+        </div>
+        <div class="profile-list-button profile-list-button-inactive" id="fav_cooks_btn" onclick="showFavCooks()">
+          Favorite Cooks
+        </div>
       </div>
-      {% for recipe in recipes %}
-      <div class="profile-recipe-list_item">
-        <a href="{{recipe.get_absolute_url}}" class="profile-recipe-link">
-          {{recipe.name}}
-        </a>
-        (Last update {{recipe.last_update|date:"M d Y"}})
-      </div>
-      {% endfor %}
-    </div>
 
-    {% else %}
-    <div>
-      <h3>No recipes added yet.</h3>
+      <!--User recipes------------------------->
+      <div class="profile-list-content profile-list-content-visible" id="user_recipes_div">
+
+        {% if recipes %}
+
+        <div class="profile-recipe-list">
+          <div class="profile-recipe-list-header">
+            (Click on a recipe name to view the details)
+          </div>
+
+          {% for recipe in recipes %}
+          <div class="profile-recipe-list_item">
+            <a href="{{recipe.get_absolute_url}}" class="profile-recipe-link">
+              {{recipe.name}}
+            </a>
+            (Last update {{recipe.last_update|date:"M d Y"}})
+          </div>
+          {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="profile-recipe-list">
+          <h3>No recipes added yet.</h3>
+        </div>
+
+        {% endif %}
+
+      </div>
+
+      <!--Favorite recipes------------------------->
+      <div class="profile-list-content element-hidden" id="fav_recipes_div">
+
+        {% if favorite_recipes %}
+
+        <div class="profile-recipe-list">
+          <div class="profile-recipe-list-header">
+            (Click on a recipe name to view the details)
+          </div>
+
+          {% for fav in favorite_recipes %}
+          <div class="profile-recipe-list_item">
+            <a href="{{fav.get_absolute_url}}" class="profile-recipe-link">
+              {{fav.name}}
+            </a>
+            (Last update {{fav.last_update|date:"M d Y"}})
+          </div>
+          {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="profile-recipe-list">
+          <div class="profile-recipe-list_item">
+            No favorite recipes added yet.
+          </div>
+        </div>
+
+        {% endif %}
+
+      </div>
+
+      <!--Favorite cooks------------------------->
+      <div class="profile-list-content element-hidden" id="fav_cooks_div">
+
+        {% if favorite_cooks %}
+
+        <div class="profile-recipe-list">
+          <div class="profile-recipe-list-header">
+            (Click name to view profile)
+          </div>
+
+          {% for cook in favorite_cooks %}
+          <div class="profile-recipe-list_item">
+            <a href="{% url 'profile' cook.username %}"><strong>{{cook.username|title}}</strong></a>
+            ({{ cook.recipe_set.count }} recipes)
+          </div>
+          {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="profile-recipe-list">
+          <div class="profile-recipe-list_item">
+            No favorite cooks added yet.
+          </div>
+        </div>
+
+        {% endif %}
+
+      </div>
+
     </div>
-    {% endif %}
 
   </div>
 
   <!-- Bootstrap JS Bundle (required for navbar toggler) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+  <script src="{% static 'recipes/js/profile/favorites.js' %}"></script>
 
 </body>
 

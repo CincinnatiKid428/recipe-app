@@ -1,11 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 from .storage_backends import MediaStorage  # import MediaStorage
 import re
 
+#imports for signals
+from django.db.models.signals import post_save 
+from django.dispatch import receiver
+
+#Get the User model
+User = get_user_model()
 
 DEBUG_LOG = True
+
 
 difficulty_choices = (
   #(actual_db_value,human_readable_label)
@@ -32,6 +39,7 @@ def smart_title(text):
     return text
 
 # Create your models here.
+
 class Recipe(models.Model):
     name = models.CharField(max_length=50)
     pic = models.ImageField(
@@ -40,12 +48,13 @@ class Recipe(models.Model):
         blank=True, 
         null=True
         #default='no_picture.jpg' image handled in templates
-    ) 
+    )
+    fav_count = models.PositiveIntegerField(default=0)
     cooking_time = models.PositiveIntegerField()
     ingredients = models.TextField()
     instructions = models.TextField(default='1. ')
-    difficulty = models.CharField(max_length=12, choices=difficulty_choices, default='intermediate')
-    last_update = models.DateTimeField(auto_now=True)
+    difficulty = models.CharField(max_length=12, choices=difficulty_choices, default='intermediate', db_index=True)
+    last_update = models.DateTimeField(auto_now=True, db_index=True)
     created_by = models.ForeignKey(
         User, 
         on_delete=models.SET(getDeletedUser),
@@ -84,3 +93,37 @@ class Recipe(models.Model):
         DEBUG_LOG and print("💾 Saving Recipe:", self.name)
 
         super().save(*args, **kwargs)
+
+
+#This model will store user favorites for recipes, cooks (may add avatar later)
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="profile"
+    )
+
+    favorite_recipes = models.ManyToManyField(
+        "Recipe",
+        blank=True,
+        related_name="recipe_fans" #access from Recipe model
+    )
+    
+    favorite_cooks = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name="cook_fans" #access from User model
+    )
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
+
+#Signals here (signals notify other parts of the application when something happens, i.e. user created or profile updated...)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created: UserProfile.objects.create(user=instance) 
+    
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

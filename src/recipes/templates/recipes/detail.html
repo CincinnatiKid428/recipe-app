@@ -8,8 +8,12 @@
   <title>
     Simmer - {{recipe.name|title}} Detail
   </title>
+
   <!--Bootstrap CDN-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!--Bootstrap Icons CDN-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
   <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
 </head>
 
@@ -25,7 +29,18 @@
 
     <div class="page-container-header">
       {{recipe.name}}
+      <!--Favorite recipe toggle-->
+      <div class="page-header-fav-row">
+        <i class="bi {% if recipe_favorited %}bi-heart-fill text-danger{% else %}bi-heart{% endif %} favorite-btn custom-favbtn-detail-profile"
+          data-type="recipe" data-id="{{ recipe.id }}">
+        </i>
+
+        <span id="count-recipe-{{recipe.id}}">
+          {{ recipe.recipe_fans.count }}
+        </span>
+      </div>
     </div>
+
     {% if request.user == object.created_by %}
     <div class="page-container-row">
       <!--Edit button-->
@@ -81,7 +96,21 @@
           </div>
           <div class="recipe-detail-value">
             {% if recipe.created_by|title != "Deleted User" %}
-            <a href="{% url 'profile' recipe.created_by%}"><strong>{{recipe.created_by|title}}</strong></a>
+            <span>
+              <a href="{% url 'profile' recipe.created_by %}">
+                <strong>{{ recipe.created_by|title }}</strong>
+              </a>
+              {% if recipe.created_by != request.user %}
+              <i class="bi {% if cook_favorited %}bi-heart-fill text-danger{% else %}bi-heart{% endif %} favorite-btn custom-favbtn-detail-profile"
+                data-type="cook" data-id="{{ recipe.created_by.username }}">
+              </i>
+              {%else %}
+              ❤️
+              {% endif %}
+              <span id="count-cook-{{ recipe.created_by.username }}">
+                {{ recipe.created_by.cook_fans.count }}
+              </span>
+            </span>
             {% else %}
             <strong>{{recipe.created_by|title}}</strong>
             {% endif %}
@@ -131,6 +160,8 @@
 
   <!-- Bootstrap JS Bundle (required for navbar toggler) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+  <script src="{% static 'recipes/js/profile/favorites.js' %}"></script>
 
 </body>
 

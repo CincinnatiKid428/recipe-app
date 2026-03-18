@@ -20,7 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import login_view, logout_view, register_view, delete_user, UserProfileView
+from .views import login_view, logout_view, register_view, delete_user, UserProfileView, toggle_favorite
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('delete-user/', delete_user, name='delete_user'),
     path('profile/<str:username>/', UserProfileView.as_view(), name='profile'),
+    path("favorite-toggle/", toggle_favorite, name="toggle_favorite"),
     path('', include('recipes.urls')), #Home, menu bar, and recipe related views
 ]
 

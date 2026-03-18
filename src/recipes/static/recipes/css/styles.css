@@ -23,7 +23,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ===== Shared Container Styles ==================================================== */
+/* ===== Shared Container Styles ========================================================================== */
 
 .page-container {
   border: var(--debug-border-width) dashed black;
@@ -38,6 +38,7 @@ a:hover {
 }
 
 .page-container-header {
+  border: var(--debug-border-width) dashed maroon;
   display: flex;
   width: 100%;
   font-size: 26px;
@@ -46,6 +47,19 @@ a:hover {
   margin-left: 15px;
   align-items: center;
   justify-content: center;
+}
+
+.page-header-fav-row { /*Row used for fav toggle in recipe detail & profile page*/
+  border: var(--debug-border-width) solid red;
+  display: flex;
+  width: auto;
+  font-size: 18px;
+  font-weight: 300;
+  margin-top: 5px;
+  margin-left: 5px;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
 }
 
 .page-container-row {
@@ -57,7 +71,7 @@ a:hover {
   gap: 5px;
 }
 
-/* ===== Shared Menu Bar Styles ================================================== */
+/* ===== Shared Menu Bar Styles ======================================================================== */
 
 .menubar-container {
   border: var(--debug-border-width) solid orange;
@@ -117,7 +131,7 @@ a:hover {
   }
 }
 
-/* ===== Shared Button Styles ==================================================== */
+/* ===== Shared Button Styles ================================================================================ */
 
 .custom-button {
   border: 2px solid #8de7b0;
@@ -159,13 +173,42 @@ a:hover {
   border: 2px solid rgb(199, 24, 24);
 }
 
+/*Used for listing.html favorite buttons*/
+.custom-favbtn { 
+  display: flex;
+  background-color: #FFF;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3px;
+  font-size: 16px;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.custom-favbtn:hover {
+  border: 1px solid #000;
+  cursor: pointer;
+}
+
+/*Used in detail.html and profile.html on fav heart buttons*/
+.custom-favbtn-detail-profile { 
+  border: none;
+}
+
+.custom-favbtn-detail-profile:hover{
+  cursor: pointer;
+}
+
 @media(max-width:550) {
   .custom-button {
     font-size: 12px;
   }
 }
 
-/* ===== Shared Graph Styles ==================================================== */
+
+
+/* ===== Shared Graph Styles ================================================================================ */
 
 .responsive-graph {
     max-width: 100%;  /* Prevents overflowing container */
@@ -232,7 +275,7 @@ a:hover {
   background-color: #bcfdd5;
 }
 
-/* ===== Styles for template - recipes/templates/recipes/about.html ===== */
+/* ===== Styles for template - recipes/templates/recipes/about.html =============================================== */
 
 .about-text-container {
     border: var(--debug-border-width) solid purple;
@@ -247,27 +290,76 @@ a:hover {
     text-align: left;
 }
 
-/* ===== Styles for templates - recipe_app/auth/profile.html ===== */
+/* ===== Styles for templates - recipe_app/auth/profile.html ===================================================== */
 
-.profile-recipe-list {
-  border: var(--debug-border-width) solid orange;
+
+.profile-list-container {
+  /*border: 1px solid black;*/
+  border: var(--debug-border-width) solid red;
+  width: 95%;
+  padding: 3px;
+  margin-top: 20px;
+}
+
+.profile-list-button-row { /*Tab row*/
+  border: var(--debug-border-width) dashed limegreen;
+  display: flex;
+  width: 100%;
+  text-align: center;
+  /*gap: 2px;*/
+}
+
+.profile-list-button { /*Tabs*/
+  flex: 1;
+  padding: 5px;
+  cursor: pointer;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.profile-list-button-active {
   border-top: 1px solid black;
   border-left: 1px solid black;
   border-right: 1px solid black;
-  max-width: 95%;
+  /*border: var(--debug-border-width) solid orangered;*/
+  background-color: #FFF;
+  font-weight: bold;
+}
+
+.profile-list-button-inactive {
+  border-bottom: 1px solid black;
+  /*border: var(--debug-border-width) solid purple;*/
+  background-color: #8de7b0;
+  font-weight: initial;
+}
+
+.profile-list-content {
+  border: var(--debug-border-width) dashed blue;
+}
+
+.element-hidden {
+  display: none;
+}
+
+/*My Recipes Stlyes*/
+
+.profile-recipe-list {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  /*border: var(--debug-border-width) solid orange;*/
+  width: 100%;
 }
 
 .profile-recipe-list-header { 
-  border: var(--debug-border-width) dashed purple;
   border-bottom: 1px solid black;
-  background-color: #bcfdd5;
+  /*border: var(--debug-border-width) dashed purple;*/
   text-align: center;
   padding: 5px;
 }
 
 .profile-recipe-list_item {
-  border: var(--debug-border-width) solid blue;
   border-bottom: 1px solid black;
+  /*border: var(--debug-border-width) solid blue;*/
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -282,7 +374,7 @@ a:hover {
   font-weight: bold;
 }
 
-/* ===== Styles for templates - recipes/templates/add_recipe.html ===== */
+/* ===== Styles for templates - recipes/templates/add_recipe.html ================================================== */
 .recipe-form {
   border: var(--debug-border-width) solid orangered;
   width:100%
@@ -365,7 +457,7 @@ a:hover {
   height: auto;
 }
 
-/* ===== Styles for template - recipes/templates/recipes/home.html ===== */
+/* ===== Styles for template - recipes/templates/recipes/home.html =============================================== */
 
 .home-container {
   border: var(--debug-border-width) dashed black;
@@ -435,7 +527,7 @@ a:hover {
   }
 }
 
-/* ===== Styles for template - recipes/templates/recipes/listing.html ===== */
+/* ===== Styles for template - recipes/templates/recipes/listing.html ======================================== */
 
 .recipe-list-row {
   border: var(--debug-border-width) solid lime;
@@ -456,6 +548,14 @@ a:hover {
   padding: 10px;
   width: 45%;
 }
+
+.recipe-list-favbtn-overlay {
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
+  z-index: 150;
+}
+
 
 @media (max-width: 550px) {
   .recipe-list-item {
@@ -480,6 +580,7 @@ a:hover {
   display: flex;
   justify-content: center;
   text-align: center; /*hoirz center pic in cell*/
+  position: relative;
 }
 
 .recipe-list-pic {
@@ -499,7 +600,7 @@ a:hover {
   font-size: 18px;
 }
 
-/* ===== Styles for template - recipes/templates/recipes/detail.html ===== */
+/* ===== Styles for template - recipes/templates/recipes/detail.html ============================================== */
 
 .recipe-detail-row {
   border: var(--debug-border-width) solid blue;
