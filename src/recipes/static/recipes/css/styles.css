@@ -210,14 +210,6 @@ a:hover {
   cursor: pointer;
 }
 
-@media(max-width:550px) {
-  .custom-button {
-    font-size: 12px;
-  }
-}
-
-
-
 /* ===== Shared Graph Styles ================================================================================ */
 
 .responsive-graph {
