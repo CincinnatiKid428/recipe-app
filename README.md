@@ -1,4 +1,4 @@
-# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.3.0
+# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.4.2
 
 ## Table of Contents
 - [Description](#description)
@@ -26,13 +26,14 @@ A Python/Django application that users will be able to log into and interact wit
 
 ## ✅ Key User Features:
 - Create an account
-- **⭐ Delete your account (new in v1.2.0)**
+- Delete your account
 - View list of all reicipes
 - View details about a recipe
+- **⭐Favorite a recipe/cook (new in v1.4.0)**
 - Add a new recipe
-- Edit/Delete recipes
+- Edit/Delete your recipes
 - Search for recipes by ingredient
-- **⭐ Profile Views (new in v1.2.0)**
+- Profile Views
 <br><br>
 ### 🔮 Future Features
 - Sort recipe list filter
@@ -63,8 +64,10 @@ Users can register for an account on the signup page with a username, password a
 <br><br>
 
 ### Recipe List
-<img width="766" height="600" alt="image" src="https://github.com/user-attachments/assets/49e3666e-f7ad-413a-adb3-76fa7d5d5d54" /><br>
-The recipe list shows all stored recipes (in order of oldest to newest).  Users can click on a recipe name or picture to access the recipe details page for their selection.  Users will also be given more options in the menubar after they log in and can "Search" for recipes by an ingredient or "Add Recipe" to submit a new dish.
+<img width="781" height="599" alt="image" src="https://github.com/user-attachments/assets/f410b34e-238b-48ef-a4b5-db1706cefb00" /><br>
+The recipe list shows all stored recipes (in order of oldest to newest) displaying an image of the recipe.  Users can click on a recipe name or image to access the recipe details page for their selection.  A favorite toggle button ❤️ will be located in the bottom right corner of each image to add/remove the recipe as a favorite.
+
+<p>Users will also be given more options in the menubar after they log in and can "Search" for recipes by an ingredient or "Add Recipe" to submit a new dish.</p>
    
 <br>[Back to Table of Contents](#table-of-contents)
 <br><br>
@@ -73,8 +76,10 @@ The recipe list shows all stored recipes (in order of oldest to newest).  Users 
 <br><br>
 
 ### Recipe Detail
-<img width="722" height="1026" alt="image" src="https://github.com/user-attachments/assets/afa200eb-d709-40a1-81e5-5bc10992451b" /><br>
+<img width="781" height="1070" alt="image" src="https://github.com/user-attachments/assets/3037e9a8-3947-485c-8c31-e88ab07a02cb" /><br>
 The recipe detail view shows all the stored information about the recipe including who created it, last update, cooking time, difficulty level, ingredient list and instructions to prepare the dish.  If you are the owner of the recipe, you will be presented with the "Edit Recipe" and "Delete Recipe" buttons to update or remove your recipe.
+
+<p>Recipes will show how many fans they have next to the favorite toggle button ❤️ near the recipe name heading.  Users can add the recipe as a favorite from the detail page or back on the listing page.  The cook named in the "Created By" field will also have a favorite toggle button ❤️ where users can add the cook to their favorites and see how many fans the cook has listed next to the heart button.</p>
    
 <br>[Back to Table of Contents](#table-of-contents)
 <br><br>
@@ -87,7 +92,7 @@ Authenticated users can add their own new recipes to the database by clicking "A
 <br><br>
 
 ### Edit/Delete Recipes
-<img width="665" height="173" alt="image" src="https://github.com/user-attachments/assets/9bc0315f-a66a-4333-b2a4-48aedf3da523" /><br>
+<img width="781" height="174" alt="image" src="https://github.com/user-attachments/assets/b90ea8d8-0b41-48f6-bef3-873b3778c7a7" /><br>
 When viewing recipe details that the authenticated user created, the options for "Edit Recipe" and "Delete Recipe" will be presented.  Only the owner of the recipe will be able to access these buttons and modify/delete their own recipes. Choosing to delete a recipe will prompt user for confirmation prior to deleting as this cannot be undone. When choosing to edit the recipe, the user will be presented with the following screen where they can make changes:<br><br>
 <img width="681" height="959" alt="image" src="https://github.com/user-attachments/assets/40ff735e-97f4-45dd-a6a5-035e33a7f03b" />
    
@@ -95,8 +100,12 @@ When viewing recipe details that the authenticated user created, the options for
 <br><br>
 
 ### Profile
-<img width="681" height="474" alt="image" src="https://github.com/user-attachments/assets/68321593-7a6d-4c51-9546-0e722640faac" /><br>
-Users can view their profile after logging in by clicking the "Profile" option in the menubar or view another user's profile by clicking their name in a recipe detail page in the "Created By" field.  When viewing a profile, a list of that user's recipes will be shown on the screen.  If a user is viewing their own profile, they will have the option to delete their account.  This action must be confirmed on another page as this action cannot be undone.  Any user that deletes their account will lose ownership of all their recipes.  Their recipes will be retained in the database, but will now fall under "Deleted User" as the creator.  ⚠️*Note: These recipes can only be edited/removed via the Django Admin Console.* 
+<img width="781" height="599" alt="image" src="https://github.com/user-attachments/assets/d3d072b2-feb1-4e61-b4b4-e9aeb0c02256" /><br>
+Users can view their profile after logging in by clicking the "Profile" option in the menubar or view another user's profile by clicking their name in a recipe detail page in the "Created By" field.  When viewing a profile, a list of that user's recipes, favorite recipes and favorite cooks will be shown in a section with tab headings for each category.  
+
+<p>A favorite toggle button ❤️ will appear with a count of fans for the profile of the user you are viewing.  If viewing your own profile, this button will be disabled but still will show the number of fans.</p>
+
+<p>If a user is viewing their own profile, they will have the option to delete their account.  This action must be confirmed on another page as this action cannot be undone.  Any user that deletes their account will lose ownership of all their recipes.  Their recipes will be retained in the database, but will now fall under "Deleted User" as the creator.  ⚠️*Note: These recipes can only be edited/removed via the Django Admin Console.* </p>
    
 <br>[Back to Table of Contents](#table-of-contents)
 <br><br>
@@ -170,11 +179,18 @@ Clicking "Search" on the bar brings the user to the search view where an ingredi
 - [Python](https://www.python.org/downloads/) v3.13.7
 - [Django](https://www.djangoproject.com/) v5.2.7 
 - [Bootstrap](https://getbootstrap.com/) v5.3.3
+- [Bootstrap Icons](https://getbootstrap.com/) v1.11.3
 - [Microsoft Azure](https://portal.azure.com/) Applicatin Hosting, Blob Storage
 - [Neon](https://neon.tech/) Postgres Database Hosting
 
 <br><br>
 ## 🚧 Change Log:
+- v1.4.2 (3/18/2026): Added CSS to support mobile devices allowing better UI layout with new favorite toggle buttons.
+- v1.4.1 (3/17/2026): Corrected staticfiles issue with "No Image" placeholder picture.
+- v1.4.0 (3/17/2026):
+     1. Added favorite recipes and cooks in a new UserProfile model for each user where users can add/remove entries using toggle buttons found in the application.
+     2. Added favorite toggle buttons ❤️ to recipe listing page, recipe detail page and profile page to allow users to add recipes and/or cooks to their UserProfile as favorites.
+     3. Added favorite recipes and favorite cooks in the profile page in a tabbed section that will display the favorites in a list and provide the link to go visit the recipe's detail page or the cook's profile page.  You may view other users' favorite recipes/cooks on their profile pages.
 - v1.3.0 (1/10/2026): 
      1. Added hamburger menu with Bootstrap for mobile support and updated all template html files to use new navbar.
      2. Added "All Recipes" option to menu (also accessed by clicking Simmer logo when logged in)
