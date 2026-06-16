@@ -10,6 +10,9 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse, reverse_lazy               #For building links in DataFrame
 
 from .models import Recipe                              #Access to Recipe model
+from django.contrib.auth import get_user_model          #Access to User model
+
+
 from .forms import IngredientSearchForm, RecipeForm
 from .utils import recipe_queryset_to_html, get_chart
 import pandas as pd
@@ -87,7 +90,7 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 
         return context
 
-#FBV for searching recipes based on ingredient
+#FBV for searching recipes based on ingredient, displaying graphs/statistics
 @login_required #🔒 PROTECTED VIEW
 def search_view(request):
 
@@ -101,6 +104,8 @@ def search_view(request):
     pie_graph = ''
     line_graph = ''
 
+
+    # ***** LINE GRAPH *****
     #Returns counts for each difficulty as list of dictionaries in
     # the format [{'difficulty':'easy' , 'count':7}, {}, {}]
     difficulty_qs = (
@@ -117,6 +122,8 @@ def search_view(request):
         data = line_df
     )
 
+
+    # ***** BAR GRAPH *****
     #Get all creators and counts for recipes created by each
     creator_qs = (
         Recipe.objects
@@ -135,21 +142,24 @@ def search_view(request):
         data = bar_df
     )
 
+
     #Handle form submits
     if request.method == 'POST':
         ingredient = request.POST.get('ingredient')
         #print(f'🥕 Searching for {ingredient}')
 
-        #Empty search returns all recipes
+        #Empty search returns no recipes
         if ingredient == '':
-            qs = Recipe.objects.all()
-            recipes_df_html = recipe_queryset_to_html(qs)
+            #qs = Recipe.objects.all()
+            #recipes_df_html = recipe_queryset_to_html(qs)
+            recipes_df_html = ''
 
         #Otherwise filter recipes to search inredient
         else:
             qs = Recipe.objects.filter(ingredients__icontains=ingredient)
 
             if qs.exists():
+                # ***** PIE CHART *****
                 recipes_df_html = recipe_queryset_to_html(qs)
 
                 #Pie chart: portion of recipes containing the ingredient
@@ -168,6 +178,43 @@ def search_view(request):
                     data=pie_df,
                 )
 
+
+    #Find top 5 favorited cooks and recipes for display in template:
+    User = get_user_model()
+
+    #Top 5 cooks (add annotation fields for favorite_total and is_favorited)
+    top_cooks = (
+        User.objects
+        .annotate(
+            favorite_total=Count("cook_fans")
+        )
+        .annotate(
+            is_favorited=Exists(
+                request.user.profile.favorite_cooks.filter(
+                    pk=OuterRef("pk")
+                )
+            )
+        )
+        .exclude(username="Deleted User")
+        .order_by("-favorite_total","username")[:5]
+    )
+
+    #Top 5 recipes (add annotation fields for favorite_total and is_favorited)
+    top_recipes = (
+        Recipe.objects
+        .annotate(
+            favorite_total=Count("recipe_fans")
+        )
+        .annotate(
+            is_favorited=Exists(
+                request.user.profile.favorite_recipes.filter(
+                    pk=OuterRef("pk")
+                )
+            )
+        )
+        .order_by("-favorite_total", "name")[:5]
+    )
+
     #Create context for template
     context = {
         'form':form,
@@ -175,6 +222,8 @@ def search_view(request):
         'bar_graph':bar_graph,
         'pie_graph':pie_graph,
         'line_graph':line_graph,
+        'top_cooks':top_cooks,
+        'top_recipes':top_recipes,
         'hide_search_menu':True,
     }
 

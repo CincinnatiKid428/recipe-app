@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, JsonResponse
 
-#Model/View imports
+#Model/View imports:
 from django.contrib.auth import get_user_model
 from recipes.models import Recipe, UserProfile
 from django.views.generic import UpdateView, DeleteView, DetailView

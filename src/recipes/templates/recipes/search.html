@@ -1,64 +1,79 @@
-<!DOCTYPE html>
-{% load static %} {%comment %} Needed for loading static css file {% endcomment %}
-<html>
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    Simmer - Search
-  </title>
-  <!--Bootstrap CDN-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'recipes/css/styles.css' %}">
-</head>
+{% block title %}
+Simmer - Search
+{% endblock %}
 
-<body>
-  <div class="page-container">
+{% block content %}
 
-    <!--Menubar-->
-    {% include 'recipes/partials/menubar.html' %}
+<div class="page-container-header">
+  Search Recipes by Ingredient:
+</div>
 
-    <div class="page-container-header">
-      Search Recipes by Ingredient:
+<div>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="custom-button"
+      style="margin-left: auto;margin-right: auto;margin-top:8px;">Search</button>
+  </form>
+</div>
+
+{% comment %} *****Recipe search-by-ingredient results***** {% endcomment %}
+<div>
+  {% if recipes_df_html %}
+  {{recipes_df_html|safe}}
+  <br>
+  {% if pie_graph %}
+  <img src="data:image/png;base64, {{pie_graph|safe}}" class="responsive-graph">
+  {% endif %}
+  {% else %}
+  <h3>No results</h3>
+  {% endif %}
+</div>
+<hr>
+
+
+{% comment %} ***** Top Cooks/Recipes ***** {% endcomment %}
+
+<div class="search-top5-container">
+
+  <div class="search-top5-list">
+    <h3>Top Cooks</h3>
+    {% for cook in top_cooks %}
+    <div class="search-top5-label-cook">
+      <a href="{% url 'profile' cook.username %}">
+        <strong>{{cook.username}}</strong>
+      </a> ❤️{{cook.favorite_total}}
     </div>
-
-    <div>
-      <form action="" method="POST">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit" class="custom-button"
-          style="margin-left: auto;margin-right: auto;margin-top:8px;">Search</button>
-      </form>
-    </div>
-    <div>
-      {% if recipes_df_html %}
-      {{recipes_df_html|safe}}
-      <br>
-      {% if pie_graph %}
-      <img src="data:image/png;base64, {{pie_graph|safe}}" class="responsive-graph">
-      {% endif %}
-      {% else %}
-      <h3>No results</h3>
-      {% endif %}
-    </div>
-    <div>
-      <hr>
-      {% if line_graph %}
-      <h3>Recipe Difficulty Totals</h3>
-      <img src="data:image/png;base64, {{line_graph|safe}}" class="responsive-graph">
-      {% endif %}
-      <hr>
-      {% if bar_graph %}
-      <h3>Recipes By User</h3>
-      <img src="data:image/png;base64, {{bar_graph|safe}}" class="responsive-graph">
-      {% endif %}
-    </div>
-
+    {% endfor %}
   </div>
 
-  <!-- Bootstrap JS Bundle (required for navbar toggler) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <div class="search-top5-list">
+    <h3>Top Recipes</h3>
+    {% for recipe in top_recipes %}
+    <div class="search-top5-label">
+      <a href="{{recipe.get_absolute_url}}">
+        <strong>{{recipe.name}}</strong>
+      </a> ❤️{{recipe.favorite_total}}
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
-</body>
+{% comment %} ***** Graph Visuals ***** {% endcomment %}
+<div>
+  <hr>
+  {% if line_graph %}
+  <h3>Recipe Difficulty Totals</h3>
+  <img src="data:image/png;base64, {{line_graph|safe}}" class="responsive-graph">
+  {% endif %}
+  <hr>
+  {% if bar_graph %}
+  <h3>Recipes By User</h3>
+  <img src="data:image/png;base64, {{bar_graph|safe}}" class="responsive-graph">
+  {% endif %}
+</div>
 
-</html>
+{% endblock %}

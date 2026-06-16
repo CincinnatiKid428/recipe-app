@@ -23,6 +23,10 @@ a:hover {
   text-decoration: underline;
 }
 
+hr {
+  width: 100%;
+}
+
 /* ===== Shared Container Styles ========================================================================== */
 
 .page-container {
@@ -256,7 +260,7 @@ a:hover {
   padding: 5px;
 }
 
-/* ===== Styling for recipes/search.html results Tables ========================================================= */
+/* ===== Styling for recipes/search.html & results Tables ========================================================= */
 
 .table {
   width: 100%;
@@ -277,6 +281,32 @@ a:hover {
   background-color: #bcfdd5;
 }
 
+.search-top5-container {
+  border: var(--debug-border-width) solid red;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.search-top5-list {
+  border: var(--debug-border-width) solid blue;
+  text-align: center;
+}
+
+.search-top5-label-cook {
+  border: var(--debug-border-width) solid green;
+  background: linear-gradient(to left, white, lightgray);
+  border-radius: 5px;
+  margin-bottom: 3px;
+}
+
+.search-top5-label {
+  border: var(--debug-border-width) solid green;
+  background: linear-gradient(to right, white, lightgray);
+  border-radius: 5px;
+  margin-bottom: 3px;
+}
 /* ===== Styles for template - recipes/templates/recipes/about.html =============================================== */
 
 .about-text-container {
@@ -308,7 +338,7 @@ a:hover {
   display: flex;
   width: 100%;
   text-align: center;
-  /*gap: 2px;*/
+  /*gap: 1px;*/
 }
 
 .profile-list-button { /*Tabs*/
@@ -317,6 +347,11 @@ a:hover {
   cursor: pointer;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  margin-right: 1px;
+}
+
+.profile-list-button:last-child {
+  margin-right: 0px;
 }
 
 .profile-list-button-active {
