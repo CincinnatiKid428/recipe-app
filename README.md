@@ -1,4 +1,4 @@
-# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.4.2
+# <img width="326" height="94" alt="image" src="https://github.com/user-attachments/assets/d1cfbf62-273e-4d77-b0cf-48bf724ea1a4" /> (A Django Recipe Application) v1.4.3
 
 ## Table of Contents
 - [Description](#description)
@@ -33,6 +33,7 @@ A Python/Django application that users will be able to log into and interact wit
 - Add a new recipe
 - Edit/Delete your recipes
 - Search for recipes by ingredient
+- **⭐Top Recipes & Cooks in Search (new in v1.4.3)**
 - Profile Views
 <br><br>
 ### 🔮 Future Features
@@ -111,7 +112,7 @@ Users can view their profile after logging in by clicking the "Profile" option i
 <br><br>
 
 ### Search
-<img width="715" height="1619" alt="image" src="https://github.com/user-attachments/assets/a3b07af2-04f3-4f2a-8a87-4557af0122da" /><br>
+<img width="790" height="1590" alt="image" src="https://github.com/user-attachments/assets/98dec612-41fc-426d-9fee-53995f1323f6" /><br>
 Clicking "Search" on the bar brings the user to the search view where an ingredient (full or partial name) can be entered and the recipes containing that ingredient will be displayed.  The names of the recipes are links to the detailed recipe view for each. The page also displays some graphs with data showing how many recipes contain the ingredient, the overall distribution of difficulty level over all recipes and how many recipes users have contributed to the database.
    
 <br>[Back to Table of Contents](#table-of-contents)
@@ -185,6 +186,10 @@ Clicking "Search" on the bar brings the user to the search view where an ingredi
 
 <br><br>
 ## 🚧 Change Log:
+- v1.4.3 (6/16/2026):
+    1. Created inheritance for all pages using a base.html file and extending it.
+    2. Added Top Recipes/Cooks to display top 5 favorited recipes and cooks.
+    3. Added favicon to application.
 - v1.4.2 (3/18/2026): Added CSS to support mobile devices allowing better UI layout with new favorite toggle buttons.
 - v1.4.1 (3/17/2026): Corrected staticfiles issue with "No Image" placeholder picture.
 - v1.4.0 (3/17/2026):
